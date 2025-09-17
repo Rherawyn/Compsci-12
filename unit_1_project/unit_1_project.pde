@@ -1,10 +1,12 @@
 //unit 1 project
 //Gabriel Altshuler
 
-String mode = "intro";
+String mode = "game";
 
 void setup() {
   size (1200, 1000);
+  
+  a = new ball();
 }
 
 void draw() {
