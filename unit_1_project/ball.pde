@@ -21,12 +21,20 @@ class ball {
     
     x = x + xv;
     
-    if(x > 1175 || x < 25) {
+    if(x > width-25 || x < width-width+25) {
      xv = -1 * xv; 
     }
     
-    if(y >= 885) {
+    if(y >= height-115) {
      yv = -10; 
+     fails++;
+    } else if (dist(x,y,hitx,hity) < 50 && sword == true) {
+      yv = -10; 
+      if (hitx - x > 0) {
+        xv = -1 * abs(xv); 
+      } else if (hitx - x <= 0) {
+        xv = abs(xv);
+      }
     }
 
   }

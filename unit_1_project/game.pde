@@ -1,11 +1,13 @@
-int vy, ay, tj;
+int vy, ay, tj, cooldown, fails;
 int px = 600;
 float py = 800;
 float pyv;
 float pya = 0.4;
 float htime;
+float hitx, hity;
 
-boolean akey, dkey, skey, hitbox;
+boolean akey, dkey, skey, sword;
+
 
 ball a;
 
@@ -17,9 +19,20 @@ void game() {
   rect(0, 900, 1200, 100);
   stroke(0);
 
-  pyv = pyv + pya;
+  //fails
+  textSize(500);
+  textAlign(CENTER, CENTER);
+  fill(220, 0, 0);
+  if (fails>0) text("X", 300, 450);
+  if (fails>1) text("X", 600, 450);
+  if (fails>2) {
+    text("X", 900, 450);
+    mode = "u suck";
+  }
 
   //player movement
+  pyv = pyv + pya;
+
   if (akey) px = px - 7;
   if (dkey) px = px + 7;
   if (skey && py == 880) {
@@ -42,11 +55,24 @@ void game() {
   a.drop();
 
   //player
+  hitx = px;
+  hity = py - 90;
+
   player(px, py);
-  if (hitbox == true) {
-    slash (px, py);
+  if (sword == true) {
+    slash (px, py+10);
+    hitbox (hitx, hity);
   } else {
-    slash (0, -100);
+    slash (0, -1000);
+    hitbox (0, -1000);
+  }
+
+  if (sword == true) {
+    cooldown++;
+  }
+  if (cooldown > 20) {
+    sword = false;
+    cooldown = 0;
   }
 }
 
@@ -75,6 +101,14 @@ void player (float x, float  y) {
   popMatrix();
 }
 
+void hitbox(float x, float y) {
+  pushMatrix();
+  translate(x, y);
+  noStroke();
+  circle(0, 0, 100);
+  popMatrix();
+}
+
 void slash(float x, float y) {
   pushMatrix();
   translate(x, y);
@@ -97,13 +131,10 @@ void jump() {
 }
 
 void gameMousePressed() {
+  sword = true;
 }
 
 void gameMouseReleased() {
-  for(int i = 0; i < 100; i++) {
-  hitbox = true;
-  }
-  hitbox = false;
 }
 
 void gamekeyPressed() {

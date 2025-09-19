@@ -4,7 +4,7 @@ void usuck() {
 }
 
 void usuckMousePressed() {
-  hitbox = true;
+  sword = true;
 }
 
 void usuckMouseReleased() {

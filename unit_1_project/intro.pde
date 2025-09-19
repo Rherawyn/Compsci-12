@@ -2,7 +2,7 @@ void intro() {
 }
 
 void introMousePressed() {
-  hitbox = true;
+  sword = true;
 }
 
 void introMouseReleased() {
