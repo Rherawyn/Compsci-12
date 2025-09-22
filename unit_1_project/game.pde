@@ -1,15 +1,18 @@
-int vy, ay, tj, cooldown, fails;
+int vy, ay, tj, cooldown, fails, score;
 int px = 600;
 float py = 800;
 float pyv;
-float pya = 0.4;
+float pya = 0.5;
 float htime;
 float hitx, hity;
 
-boolean akey, dkey, skey, sword;
+boolean akey, dkey, skey, shift, sword;
 
 
 ball a;
+ball b;
+ball c;
+ball d;
 
 void game() {
   background(100);
@@ -33,8 +36,13 @@ void game() {
   //player movement
   pyv = pyv + pya;
 
-  if (akey) px = px - 7;
-  if (dkey) px = px + 7;
+  if (shift == false) {
+    if (akey) px = px - 8;
+    if (dkey) px = px + 8;
+  } else if (shift == true) {
+    if (akey) px = px - 11;
+    if (dkey) px = px + 11;
+  }
   if (skey && py == 880) {
     if (tj < 10) {
       jump();
@@ -49,10 +57,24 @@ void game() {
     py = 880;
   }
 
-
   //balls for jugularling
   a.display();
   a.drop();
+
+  if (score > 4) {
+    b.display();
+    b.drop();
+  }
+
+  if (score > 9) {
+    c.display();
+    c.drop();
+  }
+
+  if (score > 19) {
+    d.display();
+    d.drop();
+  }
 
   //player
   hitx = px;
@@ -105,7 +127,7 @@ void hitbox(float x, float y) {
   pushMatrix();
   translate(x, y);
   noStroke();
-  circle(0, 0, 100);
+  circle(0, 0, 120);
   popMatrix();
 }
 
@@ -115,12 +137,12 @@ void slash(float x, float y) {
   noFill();
   stroke(255);
   for (int i = 0; i < 30; i++) {
-    bezier(-55, -66, -35, -190 + (i*2), 35, -190 + (i*2), 55, -66);
+    bezier(-60, -66, -35, -190 + (i*2), 35, -190 + (i*2), 60, -66);
   }
   strokeWeight(2);
   stroke(230);
-  bezier(-55, -65, -35, -190, 35, -190, 55, -65);
-  bezier(-55, -65, -35, -130, 35, -130, 55, -65);
+  bezier(-60, -65, -35, -190, 35, -190, 60, -65);
+  bezier(-60, -65, -35, -130, 35, -130, 60, -65);
   popMatrix();
 }
 
@@ -138,13 +160,15 @@ void gameMouseReleased() {
 }
 
 void gamekeyPressed() {
-  if (key == 'a') akey = true;
-  if (key == 'd') dkey = true;
+  if (key == 'a' || key == 'A') akey = true;
+  if (key == 'd' || key == 'D') dkey = true;
   if (key == ' ') skey = true;
+  if (keyCode == SHIFT) shift = true;
 }
 
 void gamekeyReleased() {
-  if (key == 'a') akey = false;
-  if (key == 'd') dkey = false;
+  if (key == 'a' || key == 'A') akey = false;
+  if (key == 'd' || key == 'D') dkey = false;
   if (key == ' ') skey = false;
+  if (keyCode == SHIFT) shift = false;
 }
