@@ -8,11 +8,7 @@ float hitx, hity;
 
 boolean akey, dkey, skey, shift, sword;
 
-
-ball a;
-ball b;
-ball c;
-ball d;
+ArrayList<ball> ball = new ArrayList<ball>();
 
 void game() {
   background(100);
@@ -21,6 +17,11 @@ void game() {
   noStroke();
   rect(0, 900, 1200, 100);
   stroke(0);
+
+  //score
+  textSize(100);
+  textAlign(CENTER, CENTER);
+  text(score, 100, 100);
 
   //fails
   textSize(500);
@@ -58,22 +59,14 @@ void game() {
   }
 
   //balls for jugularling
-  a.display();
-  a.drop();
+    ball.add(new ball());
 
-  if (score > 4) {
-    b.display();
-    b.drop();
-  }
-
-  if (score > 9) {
-    c.display();
-    c.drop();
-  }
-
-  if (score > 19) {
-    d.display();
-    d.drop();
+  int b = 1;
+  while (b < 1000) {
+    ball wee = ball.get(b);
+    wee.display();
+    wee.drop();
+    b++;
   }
 
   //player

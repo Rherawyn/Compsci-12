@@ -2,7 +2,8 @@ class ball {
   float x, y, xv, yv, ya;
   color colour;
   int start;
-  boolean stupidity;
+  boolean stupidity; 
+  boolean ihate = true;
 
   ball() {
     start = round(random(2));
@@ -35,10 +36,18 @@ class ball {
     if (x > width-25 || x < width-width+25) {
       xv = -1 * xv;
     }
+    
+    if (y < 800) {
+       ihate = true; 
+      }
 
     if (y >= height-115) {
       yv = -10;
+      if(ihate == true) {
       fails++;
+      ihate = false;
+      }
+      
     } else if (dist(x, y, hitx, hity) < 50 && sword == true) {
       yv = -10;
       if (stupidity == true) {
