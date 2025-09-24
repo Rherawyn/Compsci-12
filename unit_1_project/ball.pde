@@ -1,7 +1,7 @@
 class ball {
   float x, y, xv, yv, ya;
   color colour;
-  int start;
+  int start, hits, crash;
   boolean stupidity; 
   boolean ihate = true;
 
@@ -45,6 +45,7 @@ class ball {
       yv = -10;
       if(ihate == true) {
       fails++;
+      crash++;
       ihate = false;
       }
       
@@ -52,6 +53,8 @@ class ball {
       yv = -10;
       if (stupidity == true) {
         score++;
+        hits++;
+        addball = true;
         stupidity = false;
       }
       if (hitx - x > 0) {

@@ -1,4 +1,4 @@
-int vy, ay, tj, cooldown, fails, score;
+int vy, ay, tj, cooldown, fails, score, b;
 int px = 600;
 float py = 800;
 float pyv;
@@ -7,6 +7,7 @@ float htime;
 float hitx, hity;
 
 boolean akey, dkey, skey, shift, sword;
+boolean addball = true;
 
 ArrayList<ball> ball = new ArrayList<ball>();
 
@@ -59,26 +60,39 @@ void game() {
   }
 
   //balls for jugularling
-    ball.add(new ball());
+  if (addball == true) {
+    if (score % 3 == 0) {
+      ball wee = new ball();
+      ball.add(wee);
+    }
+    addball = false;
+  }
 
-  int b = 1;
-  while (b < 1000) {
-    ball wee = ball.get(b);
-    wee.display();
-    wee.drop();
-    b++;
+  for (int i = 0; i < ball.size(); i++) {
+    ball.get(i).display();
+    ball.get(i).drop();
+    if (ball.get(i).hits == 4) {
+      ball.remove(i);
+      explosion(ball.get(i).x, ball.get(i).y);
+    } else if (ball.get(i).crash == 1 && ball.size() < 2) {
+      fails = 3;
+    } else if (ball.get(i).crash == 1) {
+      ball.remove(i);
+      explosion(600, 500);
+      addball = true;
+    }
   }
 
   //player
   hitx = px;
   hity = py - 90;
 
-  player(px, py);
+  player(px, py, 1.3);
   if (sword == true) {
-    slash (px, py+10);
+    slash (px, py+10, 1.3);
     hitbox (hitx, hity);
   } else {
-    slash (0, -1000);
+    slash (0, -1000, 1.3);
     hitbox (0, -1000);
   }
 
@@ -91,9 +105,10 @@ void game() {
   }
 }
 
-void player (float x, float  y) {
+void player (float x, float  y, float s) {
   pushMatrix();
   translate(x, y);
+  scale(s);
   strokeWeight(2);
   fill(#606260);
   ellipse(0, 0, 80, 70);
@@ -120,13 +135,14 @@ void hitbox(float x, float y) {
   pushMatrix();
   translate(x, y);
   noStroke();
-  circle(0, 0, 120);
+  circle(0, -20, 150);
   popMatrix();
 }
 
-void slash(float x, float y) {
+void slash(float x, float y, float s) {
   pushMatrix();
   translate(x, y);
+  scale(s);
   noFill();
   stroke(255);
   for (int i = 0; i < 30; i++) {
@@ -143,6 +159,15 @@ void jump() {
   py = py - 1;
   pyv = -15;
   tj++;
+}
+
+void explosion(float x, float y) {
+  pushMatrix();
+  translate(x,y);
+  for (int i = 0; i < numberOfFrames; i++) {
+    image(gif[i], 0, 0, 150, 150);
+  }
+  popMatrix();
 }
 
 void gameMousePressed() {
