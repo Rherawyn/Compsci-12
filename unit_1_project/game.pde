@@ -73,12 +73,10 @@ void game() {
     ball.get(i).drop();
     if (ball.get(i).hits == 4) {
       ball.remove(i);
-      explosion(ball.get(i).x, ball.get(i).y);
     } else if (ball.get(i).crash == 1 && ball.size() < 2) {
       fails = 3;
     } else if (ball.get(i).crash == 1) {
       ball.remove(i);
-      explosion(600, 500);
       addball = true;
     }
   }
@@ -159,15 +157,6 @@ void jump() {
   py = py - 1;
   pyv = -15;
   tj++;
-}
-
-void explosion(float x, float y) {
-  pushMatrix();
-  translate(x,y);
-  for (int i = 0; i < numberOfFrames; i++) {
-    image(gif[i], 0, 0, 150, 150);
-  }
-  popMatrix();
 }
 
 void gameMousePressed() {
