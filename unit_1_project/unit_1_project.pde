@@ -9,6 +9,7 @@ int numberOfFrames;
 int frame;
 
 SoundFile music;
+SoundFile fail;
 
 void setup() {
   size (1200, 1000);
@@ -23,6 +24,7 @@ void setup() {
   }
 
   music = new SoundFile(this, "MUSIC.mp3");
+  fail = new SoundFile(this, "FAILURE.wav");
 
   music.play();
 }

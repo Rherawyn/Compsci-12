@@ -32,6 +32,7 @@ void game() {
   if (fails>1) text("X", 600, 450);
   if (fails>2) {
     text("X", 900, 450);
+    fail.play();
     mode = "u suck";
   }
 
