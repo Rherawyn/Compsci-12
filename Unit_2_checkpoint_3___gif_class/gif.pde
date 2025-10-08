@@ -14,27 +14,32 @@ class Gif {
     x = _x;
     y = _y;
     currentFrame = 0;
-    
-    for (int i = 0; i < f-1; i++) {
-        frame[i] = loadImage(prefix + i + sufix);
-      }
-      
-    w = frame[0].width;
-    h = frame[0].height;
-    currentFrame = 0;
 
+    frame = new PImage[f];
+    for (int i = 0; i < f; i++) {
+      frame[i] = loadImage(prefix + i + sufix);
+      w = frame[i].width;
+      h = frame[i].height;
+    }
+    currentFrame = 0;
   }
 
   Gif(String prefix, String sufix, int _x, int _y, int f, int s, int _w, int _h) {
-    this(prefix,sufix,_x,_y,f,s);
+    this(prefix, sufix, _x, _y, f, s);
     w = _w;
-    h = _h; 
+    h = _h;
 
+    currentFrame = 0;
+    frame = new PImage[f];
+    for (int i = 0; i < f; i++) {
+      frame[i] = loadImage(prefix + i + sufix);
+    }
+    currentFrame = 0;
   }
 
   void show() {
-    if(currentFrame == f) currentFrame = 0;
+    if (currentFrame == f) currentFrame = 0;
     image(frame[currentFrame], x, y, w, h);
-    if(frameCount % s == 0) currentFrame++;
+    if (frameCount % s == 0) currentFrame++;
   }
 }
