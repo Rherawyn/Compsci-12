@@ -43,14 +43,25 @@ class SpaceShip {
     fill(BLACK);
     stroke(WHITE);
     strokeWeight(5);
+    quad(-15,20,-15,-20, 5,-10, 5,10);
+    rect(0,0,35,6);
     triangle(-20, -20, -20, 20, 20, 0);
+    line(-20,0,0,0);
+    line(0,0,5,-5);
+    line(0,0,5,5);
   }
   
   void ship2() {
     fill(BLACK);
     stroke(WHITE);
     strokeWeight(5);
+    rect(0,0,50,6);
+    quad(-35, 0,-20, -15, 20, 0, -20, 15);
     triangle(-35, -15, -35, 15, 35, 0);
+    line(-35, 5, 7, 5);
+    line(-35, -5, 7, -5);
+    line(0,0,7,5);
+    line(0,0,7,-5);
   }
   
   void ship3() {
@@ -58,5 +69,6 @@ class SpaceShip {
     stroke(WHITE);
     strokeWeight(5);
     triangle(-15, -35, -15, 35, 15, 0);
+   // line(-15, -15, 
   }
 }
