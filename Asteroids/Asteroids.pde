@@ -24,6 +24,8 @@ int shipType = 0;
 boolean mouseReleased;
 boolean wasPressed;
 
+boolean upKey, leftKey, rightKey, downKey, turnRightKey, turnLeftKey;
+
 void setup() {
   mode = INTRO;
 
