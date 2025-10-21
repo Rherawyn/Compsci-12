@@ -33,93 +33,6 @@ class SpaceShip {
     collisions();
   }
 
-  void move() {
-    if (shipType == 0) {
-      //movement1
-      loc.add(vel);
-      if (upKey) vel.add(dir.x/3, dir.y/3);
-      if (downKey) vel.sub(dir.x/3, dir.y/3);
-      if (leftKey) {
-        sLeft = dir.copy();
-        sLeft.rotate(radians(-90));
-        vel.add(sLeft.x/3, sLeft.y/3);
-      }
-      if (rightKey) {
-        sRight = dir.copy();
-        sRight.rotate(radians(90));
-        vel.add(sRight.x/3, sRight.y/3);
-      }
-      if (turnRightKey) dir.rotate(radians(3));
-      if (turnLeftKey) dir.rotate(-radians(3));
-      //deceleration1
-      if (!upKey && !downKey && !leftKey && !rightKey) vel.x *= 0.96;
-      vel.y *= 0.96;
-      //boundaries1
-      if (loc.x > 1030) loc.x = -25;
-      if (loc.x < -30) loc.x = 1025;
-      if (loc.y > 930) loc.y = -25;
-      if (loc.y < -30) loc.y = 925;
-      //speed cap1
-      if (vel.x > 10) vel.setMag(10);
-      if (vel.y > 10) vel.setMag(10);
-    } else if (shipType == 1) ship2();
-    //movement2
-    loc.add(vel);
-    if (upKey) vel.add(dir.x/2, dir.y/2);
-    if (downKey) vel.sub(dir.x/2, dir.y/2);
-    if (leftKey) {
-      sLeft = dir.copy();
-      sLeft.rotate(radians(-90));
-      vel.add(sLeft.x/2, sLeft.y/2);
-    }
-    if (rightKey) {
-      sRight = dir.copy();
-      sRight.rotate(radians(90));
-      vel.add(sRight.x/2, sRight.y/2);
-    }
-    if (turnRightKey) dir.rotate(radians(3));
-    if (turnLeftKey) dir.rotate(-radians(3));
-    //deceleration2
-    if (!upKey && !downKey && !leftKey && !rightKey) vel.x *= 0.97;
-    vel.y *= 0.97;
-    //boundaries2
-    if (loc.x > 1035) loc.x = -30;
-    if (loc.x < -35) loc.x = 1030;
-    if (loc.y > 935) loc.y = -30;
-    if (loc.y < -35) loc.y = 930;
-    //speed cap2
-    if (vel.x > 13) vel.setMag(13);
-    if (vel.y > 13) vel.setMag(13);
-    else if (shipType == 2) ship3();
-    //movement3
-    loc.add(vel);
-    if (upKey) vel.add(dir.x/3, dir.y/3);
-    if (downKey) vel.sub(dir.x/3, dir.y/3);
-    if (leftKey) {
-      sLeft = dir.copy();
-      sLeft.rotate(radians(-90));
-      vel.add(sLeft.x/3, sLeft.y/3);
-    }
-    if (rightKey) {
-      sRight = dir.copy();
-      sRight.rotate(radians(90));
-      vel.add(sRight.x/3, sRight.y/3);
-    }
-    if (turnRightKey) dir.rotate(radians(3));
-    if (turnLeftKey) dir.rotate(-radians(3));
-    //deceleration3
-    if (!upKey && !downKey && !leftKey && !rightKey) vel.x *= 0.96;
-    vel.y *= 0.96;
-    //boundaries3
-    if (loc.x > 1030) loc.x = -25;
-    if (loc.x < -30) loc.x = 1025;
-    if (loc.y > 930) loc.y = -25;
-    if (loc.y < -30) loc.y = 925;
-    //speed cap3
-    if (vel.x > 10) vel.setMag(10);
-    if (vel.y > 10) vel.setMag(10);
-  }
-
   void shoot() {
   }
 
@@ -165,5 +78,81 @@ class SpaceShip {
     line(-5, 10, 0, 15);
     line(-5, 10, -15, 10);
     line(-5, -10, -15, -10);
+  }
+
+  void move() {
+    if (shipType == 0) {
+      //movement1
+      loc.add(vel);
+      if (upKey) vel.add(dir.x/3, dir.y/3);
+      if (downKey) vel.sub(dir.x/3, dir.y/3);
+      if (leftKey) {
+        sLeft = dir.copy();
+        sLeft.rotate(radians(-90));
+        vel.add(sLeft.x/3, sLeft.y/3);
+      }
+      if (rightKey) {
+        sRight = dir.copy();
+        sRight.rotate(radians(90));
+        vel.add(sRight.x/3, sRight.y/3);
+      }
+      if (turnRightKey) dir.rotate(radians(3));
+      if (turnLeftKey) dir.rotate(-radians(3));
+      //deceleration1
+      if (!upKey && !downKey && !leftKey && !rightKey) vel.x *= 0.96;
+      vel.y *= 0.96;
+      //boundaries1
+      if (loc.x > 1030) loc.x = -25;
+      if (loc.x < -30) loc.x = 1025;
+      if (loc.y > 930) loc.y = -25;
+      if (loc.y < -30) loc.y = 925;
+      //speed cap1
+      if (vel.x > 9) vel.setMag(9);
+      if (vel.y > 9) vel.setMag(9);
+      if (vel.x < -9) vel.setMag(9);
+      if (vel.y < -9) vel.setMag(9);
+    } else if (shipType == 1) {
+      //movement2
+      loc.add(vel);
+      if (upKey) vel.add(dir.x/3, dir.y/3);
+      if (downKey) vel.sub(dir.x/3, dir.y/3);
+      if (turnRightKey) dir.rotate(radians(3));
+      if (turnLeftKey) dir.rotate(-radians(3));
+      //deceleration2
+      if (!upKey && !downKey && !leftKey && !rightKey) vel.x *= 0.96;
+      vel.y *= 0.96;
+      //boundaries2
+      if (loc.x > 1030) loc.x = -25;
+      if (loc.x < -30) loc.x = 1025;
+      if (loc.y > 930) loc.y = -25;
+      if (loc.y < -30) loc.y = 925;
+      //speed cap2
+      if (vel.x > 15) vel.setMag(15);
+      if (vel.y > 15) vel.setMag(15);
+      if (vel.x < -15) vel.setMag(15);
+      if (vel.y < -15) vel.setMag(15);
+    } else if (shipType == 2) {
+      //movement3
+      loc.add(vel);
+      if (upKey) vel.add(0, -0.2);
+      if (downKey) vel.add(0, 0.2);
+      if (leftKey) vel.add(-0.2, 0);
+      if (rightKey) vel.add(0.2, 0);
+      if (turnRightKey) dir.rotate(radians(3));
+      if (turnLeftKey) dir.rotate(-radians(3));
+      //deceleration3
+      if (!upKey && !downKey && !leftKey && !rightKey) vel.x *= 0.96;
+      vel.y *= 0.96;
+      //boundaries3
+      if (loc.x > 1030) loc.x = -25;
+      if (loc.x < -30) loc.x = 1025;
+      if (loc.y > 930) loc.y = -25;
+      if (loc.y < -30) loc.y = 925;
+      //speed cap3
+      if (vel.x > 6) vel.setMag(6);
+      if (vel.y > 6) vel.setMag(6);
+      if (vel.x < -6) vel.setMag(6);
+      if (vel.y < -6) vel.setMag(6);
+    }
   }
 }
