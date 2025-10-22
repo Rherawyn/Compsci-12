@@ -34,6 +34,7 @@ class SpaceShip {
   }
 
   void shoot() {
+    if(shoot) gunfire.add(new Bullet());
   }
 
   void collisions() {
@@ -122,10 +123,10 @@ class SpaceShip {
       if (!upKey && !downKey && !leftKey && !rightKey) vel.x *= 0.96;
       vel.y *= 0.96;
       //boundaries2
-      if (loc.x > 1030) loc.x = -25;
-      if (loc.x < -30) loc.x = 1025;
-      if (loc.y > 930) loc.y = -25;
-      if (loc.y < -30) loc.y = 925;
+      if (loc.x > width+30) loc.x = -25;
+      if (loc.x < -30) loc.x = width+25;
+      if (loc.y > height+30) loc.y = -25;
+      if (loc.y < -30) loc.y = height+25;
       //speed cap2
       if (vel.x > 15) vel.setMag(15);
       if (vel.y > 15) vel.setMag(15);

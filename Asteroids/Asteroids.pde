@@ -1,7 +1,13 @@
+import java.util.ArrayList;
+
 //Comp sci 12 asteroids project
 // Gabriel Altshuler
 
+//ship
 SpaceShip showship;
+
+//bullets
+ArrayList<Bullet> gunfire;
 
 Button gameStart;
 Button shipSelect1;
@@ -24,7 +30,7 @@ int shipType = 0;
 boolean mouseReleased;
 boolean wasPressed;
 
-boolean upKey, leftKey, rightKey, downKey, turnRightKey, turnLeftKey;
+boolean upKey, leftKey, rightKey, downKey, turnRightKey, turnLeftKey, shoot;
 
 void setup() {
   mode = INTRO;
@@ -39,6 +45,9 @@ void setup() {
   
   //ship
   showship = new SpaceShip();
+  
+  //bullets
+  gunfire = new ArrayList();
 }
 
 void draw() {
