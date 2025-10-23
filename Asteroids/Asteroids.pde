@@ -7,7 +7,7 @@ import java.util.ArrayList;
 SpaceShip showship;
 
 //bullets
-ArrayList<Bullet> gunfire;
+ArrayList<GameObject> objects;
 
 Button gameStart;
 Button shipSelect1;
@@ -42,12 +42,13 @@ void setup() {
   shipSelect1 = new Button("1", 350, 700, 100, 100, BLACK, WHITE);
   shipSelect2 = new Button("2", 500, 700, 100, 100, BLACK, WHITE);
   shipSelect3 = new Button("3", 650, 700, 100, 100, BLACK, WHITE);
-  
+
+  //bullets
+  objects = new ArrayList();
+
   //ship
   showship = new SpaceShip();
-  
-  //bullets
-  gunfire = new ArrayList();
+  objects.add(showship);
 }
 
 void draw() {

@@ -1,12 +1,11 @@
-class Bullet {
+class Bullet extends GameObject{
 
-  PVector loc;
-  PVector vel;
-
+  int timer;
+  
   Bullet() {
-    loc = new PVector(showship.loc.x, showship.loc.y);
-    vel = showship.dir.copy();
+    super(showship.loc.copy(), showship.dir.copy());
     vel.setMag(10);
+    timer = 90;
   }
 
 
@@ -19,10 +18,13 @@ class Bullet {
 
   void act() {
     loc.add(vel);
+    timer--;
+    if(timer == 0) lives = 0;
 
-    if (loc.x > width+10) loc.x = -5;
-    if (loc.x < -10) loc.x = width+5;
-    if (loc.y > height+10) loc.y = -5;
-    if (loc.y < -10) loc.y = height+5;
+    super(10, -5, -10, 5, 10, -5, -10, 5);
+    //if (loc.x > width+10) loc.x = -5;
+    //if (loc.x < -10) loc.x = width+5;
+    //if (loc.y > height+10) loc.y = -5;
+    //if (loc.y < -10) loc.y = height+5;
   }
 }

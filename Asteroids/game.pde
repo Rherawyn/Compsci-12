@@ -1,13 +1,12 @@
 void game() {
   background(0);
   
-  showship.show();
-  showship.act();
   
-  for(int i = 0; i < gunfire.size(); i++) {
-    Bullet currentBullet = gunfire.get(i); 
-    currentBullet.show();
-    currentBullet.act();
+  for(int i = 0; i < objects.size(); i++) {
+    GameObject currentObject = objects.get(i); 
+    currentObject.show();
+    currentObject.act();
+    if (currentObject.lives == 0) objects.remove(i);
   }
 }
 

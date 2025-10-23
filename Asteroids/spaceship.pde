@@ -1,8 +1,6 @@
-class SpaceShip {
+class SpaceShip extends GameObject{
 
   //instance variables
-  PVector loc;
-  PVector vel;
   PVector dir;
   PVector sLeft;
   PVector sRight;
@@ -11,8 +9,7 @@ class SpaceShip {
 
   //constructor
   SpaceShip() {
-    loc = new PVector(width/2, height/2);
-    vel = new PVector(0, 0);
+    super(width/2, height/2, 0, 0);
     dir = new PVector(1, 0);
   }
 
@@ -34,7 +31,7 @@ class SpaceShip {
   }
 
   void shoot() {
-    if(shoot) gunfire.add(new Bullet());
+    if(shoot) objects.add(new Bullet());
   }
 
   void collisions() {
