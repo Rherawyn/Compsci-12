@@ -1,16 +1,17 @@
-class SpaceShip extends GameObject{
+class SpaceShip extends GameObject {
 
   //instance variables
   PVector dir;
   PVector sLeft;
   PVector sRight;
-  int lives;
+  int cooldown;
 
 
   //constructor
   SpaceShip() {
     super(width/2, height/2, 0, 0);
     dir = new PVector(1, 0);
+    cooldown = 100;
   }
 
   //behavior functions
@@ -31,7 +32,24 @@ class SpaceShip extends GameObject{
   }
 
   void shoot() {
-    if(shoot) objects.add(new Bullet());
+    cooldown++;
+    if (shipType == 0) {
+      if (shoot && cooldown > 20) {
+        objects.add(new Bullet());
+        cooldown = 0;
+      }
+    } else if (shipType == 1) {
+      if (shoot && cooldown > 10) {
+        objects.add(new Bullet());
+        cooldown = 0;
+      }
+    } else if (shipType == 2) {
+      if (shoot && cooldown > 30) {
+        objects.add(new Bullet(2.1));
+        objects.add(new Bullet(-2.1));
+        cooldown = 0;
+      }
+    }
   }
 
   void collisions() {
@@ -100,10 +118,7 @@ class SpaceShip extends GameObject{
       if (!upKey && !downKey && !leftKey && !rightKey) vel.x *= 0.96;
       vel.y *= 0.96;
       //boundaries1
-      if (loc.x > 1030) loc.x = -25;
-      if (loc.x < -30) loc.x = 1025;
-      if (loc.y > 930) loc.y = -25;
-      if (loc.y < -30) loc.y = 925;
+      wraparound(30, -25, -30, 25);
       //speed cap1
       if (vel.x > 9) vel.setMag(9);
       if (vel.y > 9) vel.setMag(9);
@@ -120,10 +135,7 @@ class SpaceShip extends GameObject{
       if (!upKey && !downKey && !leftKey && !rightKey) vel.x *= 0.96;
       vel.y *= 0.96;
       //boundaries2
-      if (loc.x > width+30) loc.x = -25;
-      if (loc.x < -30) loc.x = width+25;
-      if (loc.y > height+30) loc.y = -25;
-      if (loc.y < -30) loc.y = height+25;
+      wraparound(30, -25, -30, 25);
       //speed cap2
       if (vel.x > 15) vel.setMag(15);
       if (vel.y > 15) vel.setMag(15);
@@ -142,10 +154,7 @@ class SpaceShip extends GameObject{
       if (!upKey && !downKey && !leftKey && !rightKey) vel.x *= 0.96;
       vel.y *= 0.96;
       //boundaries3
-      if (loc.x > 1030) loc.x = -25;
-      if (loc.x < -30) loc.x = 1025;
-      if (loc.y > 930) loc.y = -25;
-      if (loc.y < -30) loc.y = 925;
+      wraparound(30, -25, -30, 25);
       //speed cap3
       if (vel.x > 6) vel.setMag(6);
       if (vel.y > 6) vel.setMag(6);

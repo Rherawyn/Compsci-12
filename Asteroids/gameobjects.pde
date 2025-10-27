@@ -16,11 +16,11 @@ class GameObject {
     lives = 1;
   }
   
-  GameObject(int x1,int x2,int x3,int x4,int y1,int y2,int y3,int y4) {
+  void wraparound(int x1,int x2,int x3,int x4) {
     if (loc.x > width+x1) loc.x = x2;
     if (loc.x < x3) loc.x = width+x4;
-    if (loc.y > height+y1) loc.y = y2;
-    if (loc.y < y3) loc.y = height+y4;
+    if (loc.y > height+x1) loc.y = x2;
+    if (loc.y < x3) loc.y = height+x4;
   }
   
   void act() {
