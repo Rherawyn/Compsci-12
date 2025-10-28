@@ -9,6 +9,7 @@ SpaceShip showship;
 //bullets
 ArrayList<GameObject> objects;
 
+
 Button gameStart;
 Button shipSelect1;
 Button shipSelect2;
@@ -49,6 +50,7 @@ void setup() {
   //ship
   showship = new SpaceShip();
   objects.add(showship);
+  objects.add (new Asteroid());
 }
 
 void draw() {
