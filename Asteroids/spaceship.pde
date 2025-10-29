@@ -118,7 +118,7 @@ class SpaceShip extends GameObject {
       if (!upKey && !downKey && !leftKey && !rightKey) vel.x *= 0.96;
       vel.y *= 0.96;
       //boundaries1
-      wraparound(30, -25, -30, 25);
+      wraparound(25);
       //speed cap1
       if (vel.x > 9) vel.setMag(9);
       if (vel.y > 9) vel.setMag(9);
@@ -135,7 +135,7 @@ class SpaceShip extends GameObject {
       if (!upKey && !downKey && !leftKey && !rightKey) vel.x *= 0.96;
       vel.y *= 0.96;
       //boundaries2
-      wraparound(30, -25, -30, 25);
+      wraparound(45);
       //speed cap2
       if (vel.x > 15) vel.setMag(15);
       if (vel.y > 15) vel.setMag(15);
@@ -154,7 +154,7 @@ class SpaceShip extends GameObject {
       if (!upKey && !downKey && !leftKey && !rightKey) vel.x *= 0.96;
       vel.y *= 0.96;
       //boundaries3
-      wraparound(30, -25, -30, 25);
+      wraparound(45);
       //speed cap3
       if (vel.x > 6) vel.setMag(6);
       if (vel.y > 6) vel.setMag(6);

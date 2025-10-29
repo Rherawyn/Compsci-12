@@ -7,6 +7,7 @@ class Bullet extends GameObject {
     vel.setMag(10);
     timer = 90;
     loc.add(vel.x*3, vel.y*3);
+    d = 5;
   }
   
   Bullet(float x) {
@@ -17,6 +18,7 @@ class Bullet extends GameObject {
     loc.add(vel.x*1.5, vel.y*1.5);
     loc.x += vel.y*x;
     loc.y -= vel.x*x;
+    d = 5;
   }
 
 
@@ -24,11 +26,7 @@ class Bullet extends GameObject {
     fill(BLACK);
     stroke(WHITE);
     strokeWeight(2);
-    if (shipType == 2) {
-      circle(loc.x, loc.y, 5);
-    } else {
-      circle(loc.x, loc.y, 5);
-    }
+    circle(loc.x, loc.y, d);
   }
 
   void act() {
@@ -36,6 +34,6 @@ class Bullet extends GameObject {
     timer--;
     if (timer == 0) lives = 0;
 
-    wraparound(10, -5, -10, 5);
+    wraparound(5);
   }
 }
