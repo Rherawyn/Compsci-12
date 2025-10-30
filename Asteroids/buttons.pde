@@ -18,7 +18,7 @@ class Button {
     norm = normal;
     clicked = false;
   }
-  
+
   Button(PImage i, int _pw, int _ph, int _x, int _y, int _w, int _h, color norm, color high) {
     x = _x;
     y = _y;
@@ -46,27 +46,23 @@ class Button {
 
   void drawRect() {
     rectMode(CENTER);
+    fill(normal);
     if (touchingMouse()) {
-      fill(highlight);
+      stroke(highlight);
     } else {
-      fill(normal);
+      stroke(normal);
     }
-    stroke(0);
-    strokeWeight(5);
-    rect(x, y, w, h, x/100);
+    strokeWeight(1);
+    rect(x, y, w, h);
   }
 
   void drawLabel() {
     textAlign(CENTER, CENTER);
-    if (touchingMouse()) {
-      fill(normal);
-    } else {
-      fill(highlight);
-    }
+    fill(highlight);
     textSize(w/4);
     text(text, x, y);
   }
-  
+
   void drawImage() {
     imageMode(CENTER);
     image(image, x, y, pw, ph);

@@ -5,6 +5,7 @@ class SpaceShip extends GameObject {
   PVector sLeft;
   PVector sRight;
   int cooldown;
+  int ivframes = 200;
 
 
   //constructor
@@ -23,6 +24,12 @@ class SpaceShip extends GameObject {
     else if (shipType == 1) ship2();
     else if (shipType == 2) ship3();
     popMatrix();
+    
+    //UI
+    fill(255);
+    textAlign(CENTER,CENTER);
+    textSize(100);
+    text(lives, 100, 100);
   }
 
   void act() {
@@ -53,6 +60,7 @@ class SpaceShip extends GameObject {
   }
 
   void collisions() {
+    ivframes--;
   }
 
   void ship1() {

@@ -40,9 +40,9 @@ void setup() {
 
   //buttons
   gameStart = new Button("START", 500, 450, 400, 200, BLACK, WHITE);
-  shipSelect1 = new Button("1", 350, 700, 100, 100, BLACK, WHITE);
-  shipSelect2 = new Button("2", 500, 700, 100, 100, BLACK, WHITE);
-  shipSelect3 = new Button("3", 650, 700, 100, 100, BLACK, WHITE);
+  shipSelect1 = new Button("", 350, 700, 100, 100, BLACK, WHITE);
+  shipSelect2 = new Button("", 500, 700, 100, 100, BLACK, WHITE);
+  shipSelect3 = new Button("", 650, 700, 100, 100, BLACK, WHITE);
 
   //bullets
   objects = new ArrayList();
@@ -50,7 +50,6 @@ void setup() {
   //ship
   showship = new SpaceShip();
   objects.add(showship);
-  objects.add (new Asteroid());
   objects.add (new Asteroid());
   objects.add (new Asteroid());
   objects.add (new Asteroid());
