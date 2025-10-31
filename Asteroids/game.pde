@@ -17,6 +17,10 @@ void game() {
     objects.add (new Asteroid());
     aspawn = 750;
   }
+  
+  if (showship.lives == 0) {
+    mode = GAMEOVER;
+  }
 }
 
 void gameMousePresed() {

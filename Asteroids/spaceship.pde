@@ -25,6 +25,11 @@ class SpaceShip extends GameObject {
     else if (shipType == 2) ship3();
     popMatrix();
     
+    //iv frames
+    noFill();
+    stroke(255, map(ivframes,0,200,0,255));
+    circle(loc.x,loc.y,100);
+    
     //UI
     fill(255);
     textAlign(CENTER,CENTER);

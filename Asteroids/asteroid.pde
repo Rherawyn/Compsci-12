@@ -1,21 +1,36 @@
 class Asteroid  extends GameObject {
   PShape shape;
+  float spawn;
 
   Asteroid() {
-    super(random(0, width), random(0, height), 1, 1);
+    super(0, 0, 1, 1);
+    spawn = (int)random(0, 4);
+    if (spawn == 0) {
+      loc.x = -100;
+      loc.y = random(0, height);
+    } else if (spawn == 1) {
+      loc.x = width+100;
+      loc.y = random(0, height);
+    } else if (spawn == 2) {
+      loc.x = random(0, width);
+      loc.y = -100;
+    } else if (spawn == 3) {
+      loc.x = random(0, width);
+      loc.y = height+100;
+    }
     vel.setMag(random(1, 2));
     vel.rotate(random(TWO_PI));
     lives = 3;
     d = 66*lives;
     shaped();
   }
-  
+
   Asteroid(int l, float x, float y) {
     super(x, y, 1, 1);
     vel.setMag(random(1, 2));
     vel.rotate(random(TWO_PI));
     lives = l;
-    d = 33*lives;
+    d = 66*lives;
     shaped();
   }
 
@@ -66,7 +81,7 @@ class Asteroid  extends GameObject {
           vel.setMag(random(1, 2));
           vel.rotate(random(TWO_PI));
           objects.add (new Asteroid(lives, loc.x, loc.y));
-          if(obj.lives <= 0) objects.remove(i);
+          if (obj.lives <= 0) objects.remove(i);
         }
       } else if (obj instanceof SpaceShip) {
         if (dist(loc.x, loc.y, obj.loc.x, obj.loc.y)<d/2 + 20 && showship.ivframes <= 0) {
@@ -77,7 +92,7 @@ class Asteroid  extends GameObject {
           vel.setMag(random(1, 2));
           vel.rotate(random(TWO_PI));
           objects.add (new Asteroid(lives, loc.x, loc.y));
-          if(obj.lives <= 0) objects.remove(i);
+          if (obj.lives <= 0) objects.remove(i);
         }
       }
     }
