@@ -4,7 +4,7 @@ class SpaceShip extends GameObject {
   PVector dir;
   PVector sLeft;
   PVector sRight;
-  int cooldown;
+  int cooldown, score;
   int ivframes = 200;
 
 
@@ -35,6 +35,7 @@ class SpaceShip extends GameObject {
     textAlign(CENTER,CENTER);
     textSize(100);
     text(lives, 100, 100);
+    text(score, 500, 100);
   }
 
   void act() {

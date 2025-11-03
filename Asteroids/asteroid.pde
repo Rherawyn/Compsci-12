@@ -77,9 +77,13 @@ class Asteroid  extends GameObject {
         if (dist(loc.x, loc.y, obj.loc.x, obj.loc.y)<d/2 + obj.d/2) {
           lives--;
           obj.lives = 0;
+          showship.score++;
           shaped();
           vel.setMag(random(1, 2));
           vel.rotate(random(TWO_PI));
+          for(int g  = 0; g < random(7,10); g++) {
+           objects.add (new Particles(loc.x,loc.y)); 
+          }
           objects.add (new Asteroid(lives, loc.x, loc.y));
           if (obj.lives <= 0) objects.remove(i);
         }
@@ -88,9 +92,13 @@ class Asteroid  extends GameObject {
           lives--;
           obj.lives--;
           showship.ivframes = 200;
+          showship.score++;
           shaped();
           vel.setMag(random(1, 2));
           vel.rotate(random(TWO_PI));
+          for(int g  = 0; g < random(7,10); g++) {
+           objects.add (new Particles(loc.x,loc.y)); 
+          }
           objects.add (new Asteroid(lives, loc.x, loc.y));
           if (obj.lives <= 0) objects.remove(i);
         }

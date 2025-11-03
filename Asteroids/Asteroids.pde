@@ -14,6 +14,7 @@ Button gameStart;
 Button shipSelect1;
 Button shipSelect2;
 Button shipSelect3;
+Button restart;
 
 //colors
 color BLACK = #000000;
@@ -43,6 +44,7 @@ void setup() {
   shipSelect1 = new Button("", 350, 700, 100, 100, BLACK, WHITE);
   shipSelect2 = new Button("", 500, 700, 100, 100, BLACK, WHITE);
   shipSelect3 = new Button("", 650, 700, 100, 100, BLACK, WHITE);
+  restart = new Button("RETRY?", 500, 600, 400, 200, BLACK, WHITE);
 
   //bullets
   objects = new ArrayList();
