@@ -24,7 +24,7 @@ class Bullet extends GameObject {
 
   void show() {
     fill(BLACK);
-    stroke(WHITE);
+    stroke(colour);
     strokeWeight(2);
     circle(loc.x, loc.y, d);
   }

@@ -8,8 +8,8 @@ class Particles extends GameObject {
   }
 
   void show() {
-    fill(WHITE,o);
-    stroke(WHITE,o);
+    fill(colour,o);
+    stroke(colour,o);
     strokeWeight(3);
     circle(loc.x, loc.y, d);
     o--;

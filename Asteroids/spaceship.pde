@@ -4,7 +4,8 @@ class SpaceShip extends GameObject {
   PVector dir;
   PVector sLeft;
   PVector sRight;
-  int cooldown, score;
+  int cooldown, score, tpx, tpy;
+  int tpcooldown = 0;
   int ivframes = 200;
 
 
@@ -24,15 +25,22 @@ class SpaceShip extends GameObject {
     else if (shipType == 1) ship2();
     else if (shipType == 2) ship3();
     popMatrix();
-    
+
     //iv frames
     noFill();
-    stroke(255, map(ivframes,0,200,0,255));
-    circle(loc.x,loc.y,100);
+    stroke(colour, map(ivframes, 0, 200, 0, 255));
+    circle(loc.x, loc.y, 100);
     
+    //tpcooldown
+    rectMode(CORNER);
+    if(tpcooldown >= 0) stroke(colour);
+    else noStroke();
+    rect(50,800,map(tpcooldown,0,500,0,200),50);
+    rectMode(CENTER);
+
     //UI
-    fill(255);
-    textAlign(CENTER,CENTER);
+    fill(colour);
+    textAlign(CENTER, CENTER);
     textSize(100);
     text(lives, 100, 100);
     text(score, 500, 100);
@@ -71,7 +79,7 @@ class SpaceShip extends GameObject {
 
   void ship1() {
     fill(BLACK);
-    stroke(WHITE);
+    stroke(colour);
     strokeWeight(5);
     quad(-15, 20, -15, -20, 5, -10, 5, 10);
     rect(0, 0, 35, 6);
@@ -83,7 +91,7 @@ class SpaceShip extends GameObject {
 
   void ship2() {
     fill(BLACK);
-    stroke(WHITE);
+    stroke(colour);
     strokeWeight(5);
     rect(0, 0, 50, 6);
     quad(-35, 0, -20, -15, 20, 0, -20, 15);
@@ -96,7 +104,7 @@ class SpaceShip extends GameObject {
 
   void ship3() {
     fill(BLACK);
-    stroke(WHITE);
+    stroke(colour);
     strokeWeight(5);
     rect(-5, -20, 25, 6);
     rect(-5, 20, 25, 6);
@@ -111,6 +119,7 @@ class SpaceShip extends GameObject {
   }
 
   void move() {
+    tpcooldown--;
     if (shipType == 0) {
       //movement1
       loc.add(vel);
@@ -174,6 +183,24 @@ class SpaceShip extends GameObject {
       if (vel.y > 6) vel.setMag(6);
       if (vel.x < -6) vel.setMag(6);
       if (vel.y < -6) vel.setMag(6);
+    }
+
+    if (telep && tpcooldown <= 0) {
+      for (int i = 0; i < objects.size(); i++) {
+        GameObject obj = objects.get(i);
+        if (obj instanceof Asteroid) {
+          for (int b = 1; b > 0; b++) {
+            tpx = (int)random(0,1000);
+            tpy = (int)random(0,900);
+            if (dist(tpx, tpy, obj.loc.x, obj.loc.y)>25 + obj.d/2) {
+              loc.x = tpx;
+              loc.y = tpy;
+              tpcooldown = 500;
+              break;
+            }
+          }
+        }
+      }
     }
   }
 }

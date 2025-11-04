@@ -15,7 +15,7 @@ void game() {
 
   if (aspawn <= 0) {
     objects.add (new Asteroid());
-    aspawn = 750;
+    aspawn = 400;
   }
   
   if (showship.lives == 0) {

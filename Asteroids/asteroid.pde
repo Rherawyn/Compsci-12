@@ -42,7 +42,7 @@ class Asteroid  extends GameObject {
   }
 
   void act() {
-    stroke(255);
+    stroke(colour);
     noFill();
     loc.add(vel);
     wraparound(40*lives);
@@ -55,7 +55,7 @@ class Asteroid  extends GameObject {
     int r = 5*lives;
     int r2 = 3*lives;
     noFill();
-    stroke(255);
+    stroke(colour);
     strokeWeight(5);
     shape = createShape();
     shape.beginShape();
