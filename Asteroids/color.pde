@@ -15,6 +15,13 @@ void colour() {
   } else if (c == 6) {
     colour = PURPLE;
   }
+  
+  gameStart.highlight = colour;
+  restart.highlight = colour;
+  shipSelect1.highlight = colour;
+  shipSelect2.highlight = colour;
+  shipSelect3.highlight = colour;
+  colourSelect.highlight = colour;
 
   if (c > 6) {
     c = 1;

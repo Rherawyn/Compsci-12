@@ -60,10 +60,6 @@ void setup() {
   //ship
   showship = new SpaceShip();
   objects.add(showship);
-  objects.add (new Asteroid());
-  objects.add (new Asteroid());
-  objects.add (new Asteroid());
-  objects.add (new Asteroid());
 }
 
 void draw() {
