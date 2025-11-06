@@ -82,7 +82,7 @@ class Asteroid  extends GameObject {
           vel.setMag(random(1, 2));
           vel.rotate(random(TWO_PI));
           for(int g  = 0; g < random(7,10); g++) {
-           objects.add (new Particles(loc.x,loc.y)); 
+           objects.add (new Particles(loc.x,loc.y, random(-1,1), random(-1,1), 15)); 
           }
           objects.add (new Asteroid(lives, loc.x, loc.y));
           if (obj.lives <= 0) objects.remove(i);
@@ -97,7 +97,7 @@ class Asteroid  extends GameObject {
           vel.setMag(random(1, 2));
           vel.rotate(random(TWO_PI));
           for(int g  = 0; g < random(7,10); g++) {
-           objects.add (new Particles(loc.x,loc.y)); 
+           objects.add (new Particles(loc.x,loc.y, random(-1,1), random(-1,1), 15)); 
           }
           objects.add (new Asteroid(lives, loc.x, loc.y));
           if (obj.lives <= 0) objects.remove(i);

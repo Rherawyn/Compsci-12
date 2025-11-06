@@ -6,6 +6,7 @@ class SpaceShip extends GameObject {
   PVector sRight;
   int cooldown, score, tpx, tpy;
   int tpcooldown = 0;
+  int pcooldown = 0;
   int ivframes = 200;
 
 
@@ -30,12 +31,12 @@ class SpaceShip extends GameObject {
     noFill();
     stroke(colour, map(ivframes, 0, 200, 0, 255));
     circle(loc.x, loc.y, 100);
-    
+
     //tpcooldown
     rectMode(CORNER);
-    if(tpcooldown >= 0) stroke(colour);
+    if (tpcooldown >= 0) stroke(colour);
     else noStroke();
-    rect(50,800,map(tpcooldown,0,500,0,200),50);
+    rect(50, 800, map(tpcooldown, 0, 500, 0, 200), 50);
     rectMode(CENTER);
 
     //UI
@@ -119,11 +120,19 @@ class SpaceShip extends GameObject {
   }
 
   void move() {
+    print(dir);
+    pcooldown --;
     tpcooldown--;
     if (shipType == 0) {
       //movement1
       loc.add(vel);
-      if (upKey) vel.add(dir.x/3, dir.y/3);
+      if (upKey) {
+        vel.add(dir.x/3, dir.y/3);
+        while (upKey & pcooldown <= 0) {
+          objects.add (new Particles(loc.x, loc.y, -dir.heading(), random(-1, 1), 10));
+          pcooldown = 10;
+        }
+      }
       if (downKey) vel.sub(dir.x/3, dir.y/3);
       if (leftKey) {
         sLeft = dir.copy();
@@ -134,6 +143,10 @@ class SpaceShip extends GameObject {
         sRight = dir.copy();
         sRight.rotate(radians(90));
         vel.add(sRight.x/3, sRight.y/3);
+        while (rightKey & pcooldown <= 0) {
+          objects.add (new Particles(loc.x, loc.y, -dir.heading(), random(-1, 1), 10));
+          pcooldown = 10;
+        }
       }
       if (turnRightKey) dir.rotate(radians(3));
       if (turnLeftKey) dir.rotate(-radians(3));
@@ -190,8 +203,8 @@ class SpaceShip extends GameObject {
         GameObject obj = objects.get(i);
         if (obj instanceof Asteroid) {
           for (int b = 1; b > 0; b++) {
-            tpx = (int)random(0,1000);
-            tpy = (int)random(0,900);
+            tpx = (int)random(0, 1000);
+            tpy = (int)random(0, 900);
             if (dist(tpx, tpy, obj.loc.x, obj.loc.y)>25 + obj.d/2) {
               loc.x = tpx;
               loc.y = tpy;

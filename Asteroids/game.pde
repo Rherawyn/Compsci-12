@@ -1,4 +1,5 @@
 int aspawn = 500;
+int uspawn = 400;
 int initial = 0;
 void game() {
 
@@ -13,6 +14,7 @@ void game() {
   }
 
   aspawn--;
+  uspawn--;
 
   for (int i = 0; i < objects.size(); i++) {
     GameObject obj = objects.get(i);
@@ -24,6 +26,11 @@ void game() {
   if (aspawn <= 0) {
     objects.add (new Asteroid());
     aspawn = 200;
+  }
+  
+  if (uspawn <= 0) {
+    objects.add (new UFO());
+    uspawn = 400;
   }
 
   if (showship.lives == 0) {
