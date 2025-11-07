@@ -4,6 +4,7 @@ class GameObject {
   PVector vel;
   int lives;
   float d;
+  boolean tag;
   
   GameObject(float lx, float ly, float px, float py) {
     loc = new PVector(lx, ly);

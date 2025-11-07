@@ -1,5 +1,6 @@
 class UFO extends GameObject {
   int sframes = 50;
+  int cooldown = 0;
   PVector dir;
   float spawn;
 
@@ -31,17 +32,19 @@ class UFO extends GameObject {
     translate(loc.x, loc.y);
     rotate(dir.heading());
     stroke(colour);
+    strokeWeight(5);
     noFill();
     quad(-20, 20, -20, -20, 20, -15, 20, 15);
     line(20, 7, -10, 7);
-    line(-10,7, -20, 20);
+    line(-10, 7, -20, 20);
     line(20, -7, -10, -7);
-    line(-10,-7, -20, -20);
+    line(-10, -7, -20, -20);
     popMatrix();
   }
 
   void act() {
     loc.add(vel.x*1.5, vel.y*1.5);
+    shoot();
     collisions();
     sframes--;
     if (sframes > 0) {
@@ -57,18 +60,26 @@ class UFO extends GameObject {
     }
   }
 
+  void shoot() {
+    cooldown ++;
+    if (cooldown > 60 ) {
+      objects.add(new Bullet(loc.x, loc.y, true));
+      cooldown = 0;
+    }
+  }
+  
   void collisions() {
     for (int i = 0; i < objects.size(); i++) {
       GameObject obj = objects.get(i);
       if (obj instanceof Bullet) {
-        if (dist(loc.x, loc.y, obj.loc.x, obj.loc.y)<20 + obj.d/2) {
+        if (dist(loc.x, loc.y, obj.loc.x, obj.loc.y)<40 + obj.d/2  && obj.tag == false) {
           lives--;
           obj.lives = 0;
-          showship.score++;
+          showship.score+= 5;
           vel.setMag(random(1, 2));
           vel.rotate(random(TWO_PI));
           for (int g  = 0; g < random(7, 10); g++) {
-            objects.add (new Particles(loc.x, loc.y, random(-1,1), random(-1,1), 15));
+            objects.add (new Particles(loc.x, loc.y, random(-1, 1), random(-1, 1), 15));
           }
         }
       } else if (obj instanceof SpaceShip) {
@@ -76,11 +87,11 @@ class UFO extends GameObject {
           lives--;
           obj.lives--;
           showship.ivframes = 200;
-          showship.score++;
+          showship.score+= 5;
           vel.setMag(random(1, 2));
           vel.rotate(random(TWO_PI));
           for (int g  = 0; g < random(7, 10); g++) {
-            objects.add (new Particles(loc.x, loc.y, random(-1,1), random(-1,1), 15));
+            objects.add (new Particles(loc.x, loc.y, random(-1, 1), random(-1, 1), 15));
           }
         }
       }

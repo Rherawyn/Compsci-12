@@ -1,5 +1,5 @@
 int aspawn = 500;
-int uspawn = 400;
+int uspawn = 500;
 int initial = 0;
 void game() {
 
@@ -30,7 +30,7 @@ void game() {
   
   if (uspawn <= 0) {
     objects.add (new UFO());
-    uspawn = 400;
+    uspawn = 500;
   }
 
   if (showship.lives == 0) {

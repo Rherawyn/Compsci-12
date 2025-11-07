@@ -6,6 +6,9 @@ import java.util.ArrayList;
 //ship
 SpaceShip showship;
 
+//ufo
+UFO ufo;
+
 //bullets
 ArrayList<GameObject> objects;
 
@@ -60,6 +63,9 @@ void setup() {
   //ship
   showship = new SpaceShip();
   objects.add(showship);
+  
+  //ufo
+  ufo = new UFO();
 }
 
 void draw() {

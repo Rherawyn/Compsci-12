@@ -57,18 +57,18 @@ class SpaceShip extends GameObject {
     cooldown++;
     if (shipType == 0) {
       if (shoot && cooldown > 20) {
-        objects.add(new Bullet());
+        objects.add(new Bullet(false));
         cooldown = 0;
       }
     } else if (shipType == 1) {
       if (shoot && cooldown > 10) {
-        objects.add(new Bullet());
+        objects.add(new Bullet(false));
         cooldown = 0;
       }
     } else if (shipType == 2) {
       if (shoot && cooldown > 30) {
-        objects.add(new Bullet(2.1));
-        objects.add(new Bullet(-2.1));
+        objects.add(new Bullet(2.1, false));
+        objects.add(new Bullet(-2.1, false));
         cooldown = 0;
       }
     }
@@ -76,6 +76,16 @@ class SpaceShip extends GameObject {
 
   void collisions() {
     ivframes--;
+    for (int i = 0; i < objects.size(); i++) {
+      GameObject obj = objects.get(i);
+      if (obj instanceof Bullet && ivframes < 0) {
+        if (dist(loc.x, loc.y, obj.loc.x, obj.loc.y)<40 + obj.d/2 && obj.tag == true) {
+          lives--;
+          ivframes = 200;
+          obj.lives = 0;
+        }
+      } 
+    }
   }
 
   void ship1() {
@@ -120,7 +130,6 @@ class SpaceShip extends GameObject {
   }
 
   void move() {
-    print(dir);
     pcooldown --;
     tpcooldown--;
     if (shipType == 0) {
@@ -129,7 +138,7 @@ class SpaceShip extends GameObject {
       if (upKey) {
         vel.add(dir.x/3, dir.y/3);
         while (upKey & pcooldown <= 0) {
-          objects.add (new Particles(loc.x, loc.y, -dir.heading(), random(-1, 1), 10));
+          objects.add (new Particles(loc.x, loc.y, -dir.heading(), -dir.heading(), 10));
           pcooldown = 10;
         }
       }
@@ -144,7 +153,7 @@ class SpaceShip extends GameObject {
         sRight.rotate(radians(90));
         vel.add(sRight.x/3, sRight.y/3);
         while (rightKey & pcooldown <= 0) {
-          objects.add (new Particles(loc.x, loc.y, -dir.heading(), random(-1, 1), 10));
+          objects.add (new Particles(loc.x, loc.y, -dir.heading(), -dir.heading(), 10));
           pcooldown = 10;
         }
       }
