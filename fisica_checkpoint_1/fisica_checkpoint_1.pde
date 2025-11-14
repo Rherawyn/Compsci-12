@@ -23,6 +23,7 @@ color yellow = color(242, 215, 16);
 
 //assets
 PImage redBird;
+PImage funifrog;
 
 FPoly topPlatform;
 FPoly bottomPlatform;
@@ -40,6 +41,8 @@ void setup() {
 
   //load resources
   redBird = loadImage("red-bird.png");
+  funifrog = loadImage("funifrog.jpg");
+  funifrog.resize(50,50);
 
   //initialise world
   makeWorld();
@@ -211,9 +214,7 @@ void makeBox() {
   box.setPosition(random(100, width-100), -5);
 
   //set visuals
-  box.setStroke(0);
-  box.setStrokeWeight(2);
-  box.setFillColor(green);
+  box.attachImage(funifrog);
 
   //set physical properties
   box.setDensity(0.2);
