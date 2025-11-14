@@ -15,6 +15,8 @@ boolean grav = true;
 boolean gen = true;
 
 //palette //<>//
+color background = #17063E;
+color white = color(255);
 color blue   = color(29, 178, 242);
 color brown  = color(166, 120, 24);
 color green  = color(74, 163, 57);
@@ -23,17 +25,18 @@ color yellow = color(242, 215, 16);
 
 //assets
 PImage redBird;
-PImage funifrog;
 
-FPoly topPlatform;
-FPoly bottomPlatform;
+FPoly border;
+FPoly bucket;
+FPoly funnelLeft;
+FPoly funnelRight;
 
 //fisica
 FWorld world;
 
 void setup() {
   //make window
-  size(800, 600);
+  size(1000, 800);
 
   //buttons
   gravity = new Button("Gravity", 100, 100, 100, 75, blue, green);
@@ -41,15 +44,15 @@ void setup() {
 
   //load resources
   redBird = loadImage("red-bird.png");
-  funifrog = loadImage("funifrog.jpg");
-  funifrog.resize(50,50);
 
   //initialise world
   makeWorld();
 
   //add terrain to world
-  makeTopPlatform();
-  makeBottomPlatform();
+  makeBorder();
+  makeBucket();
+  makeFunnelLeft();
+  makeFunnelRight();
 }
 
 //===========================================================================================
@@ -62,65 +65,113 @@ void makeWorld() {
 
 //===========================================================================================
 
-void makeTopPlatform() {
-  topPlatform = new FPoly();
+void makeBorder() {
+  border = new FPoly();
+  border.setGrabbable(false);
 
   //plot the vertices of this platform
-  topPlatform.vertex(-100, 60);
-  topPlatform.vertex(400, 240);
-  topPlatform.vertex(400, 340);
-  topPlatform.vertex(-100, 160);
+  border.vertex(625, 0);
+  border.vertex(625, height);
+  border.vertex(650, height);
+  border.vertex(650, 0);
 
   // define properties
-  topPlatform.setStatic(true);
-  topPlatform.setFillColor(brown);
-  topPlatform.setFriction(0.1);
+  border.setStatic(true);
+  border.setNoStroke();
+  border.setFillColor(white);
+  border.setFriction(0.1);
 
   //put it in the world
-  world.add(topPlatform);
+  world.add(border);
 }
 
 //===========================================================================================
 
-void makeBottomPlatform() {
-  bottomPlatform = new FPoly();
+void makeBucket() {
+  bucket = new FPoly();
+  bucket.setGrabbable(false);
 
   //plot the vertices of this platform
-  bottomPlatform.vertex(900, 400);
-  bottomPlatform.vertex(750, 500);
-  bottomPlatform.vertex(450, 500);
-  bottomPlatform.vertex(300, 400);
-  bottomPlatform.vertex(300, 500);
-  bottomPlatform.vertex(450, 600);
-  bottomPlatform.vertex(750, 600);
-  bottomPlatform.vertex(900, 500);
+  bucket.vertex(475, 325);
+  bucket.vertex(475, 525);
+  bucket.vertex(150, 525);
+  bucket.vertex(150, 325);
+  bucket.vertex(125, 325);
+  bucket.vertex(125, 550);
+  bucket.vertex(500, 550);
+  bucket.vertex(500, 325);
 
   // define properties
-  bottomPlatform.setStatic(true);
-  bottomPlatform.setFillColor(brown);
-  bottomPlatform.setFriction(0);
+  bucket.setStatic(true);
+  bucket.setNoStroke();
+  bucket.setFillColor(white);
+  bucket.setFriction(0);
 
   //put it in the world
-  world.add(bottomPlatform);
+  world.add(bucket);
+}
+
+void makeFunnelLeft() {
+  funnelLeft = new FPoly();
+  funnelLeft.setGrabbable(false);
+
+  //plot the vertices of this platform
+  funnelLeft.vertex(0, 675);
+  funnelLeft.vertex(300, 700);
+  funnelLeft.vertex(300, height);
+  funnelLeft.vertex(275, height);
+  funnelLeft.vertex(275, 723);
+  funnelLeft.vertex(0, 700);
+
+  // define properties
+  funnelLeft.setStatic(true);
+  funnelLeft.setNoStroke();
+  funnelLeft.setFillColor(white);
+  funnelLeft.setFriction(0);
+
+  //put it in the world
+  world.add(funnelLeft);
+}
+
+void makeFunnelRight() {
+  funnelRight = new FPoly();
+  funnelRight.setGrabbable(false);
+
+  //plot the vertices of this platform
+  funnelRight.vertex(625, 675);
+  funnelRight.vertex(320, 700);
+  funnelRight.vertex(320, height);
+  funnelRight.vertex(345, height);
+  funnelRight.vertex(345, 723);
+  funnelRight.vertex(625, 700);
+
+  // define properties
+  funnelRight.setStatic(true);
+  funnelRight.setNoStroke();
+  funnelRight.setFillColor(white);
+  funnelRight.setFriction(0);
+
+  //put it in the world
+  world.add(funnelRight);
 }
 
 
 //===========================================================================================
 
-void clouds(float x, float y) {
-  pushMatrix();
-  translate(x, y);
-  noStroke();
-  fill(255);
-  ellipse(0, 0, 75, 50);
-  ellipse(-35, 10, 50, 25);
-  ellipse(40, -5, 40, 30);
-  popMatrix();
-}
+//void clouds(float x, float y) {
+//  pushMatrix();
+//  translate(x, y);
+//  noStroke();
+//  fill(255);
+//  ellipse(0, 0, 75, 50);
+//  ellipse(-35, 10, 50, 25);
+//  ellipse(40, -5, 40, 30);
+//  popMatrix();
+//}
 
 void draw() {
   println("x: " + mouseX + " y: " + mouseY);
-  background(blue);
+  background(background);
 
   if (grav == true) {
     world.setGravity(0, 900);
@@ -129,29 +180,29 @@ void draw() {
   }
 
   if (frameCount % 50 == 0 && gen == true) {  //Every 20 frames ...
-    makeCircle();
+    //makeCircle();
     makeBlob();
-    makeBox();
-    makeBird();
+    //makeBox();
+    //makeBird();
   }
 
   //cloud 1
   c1+= 5;
   c2+= 5;
 
-  clouds(c1, 200);
-  if (c1 > 850) {
-    c1 = -100;
-  }
+  //clouds(c1, 200);
+  //if (c1 > 850) {
+  //  c1 = -100;
+  //}
 
   world.step();  //get box2D to calculate all the forces and new positions
   world.draw();  //ask box2D to convert this world to processing screen coordinates and draw
 
-  //cloud 2
-  clouds(c2, 500);
-  if (c2 > 850) {
-    c2 = -100;
-  }
+  ////cloud 2
+  //clouds(c2, 500);
+  //if (c2 > 850) {
+  //  c2 = -100;
+  //}
 
   click();
   gravity.show();
@@ -172,7 +223,7 @@ void draw() {
 void makeCircle() {
   FCircle circle = new FCircle(50);
   circle.setPosition(random(100, width-100), -5);
-
+  
   //set visuals
   circle.setStroke(0);
   circle.setStrokeWeight(2);
@@ -193,7 +244,7 @@ void makeBlob() {
   FBlob blob = new FBlob();
 
   //set visuals
-  blob.setAsCircle(random(100, width-100), -5, 50);
+  blob.setAsCircle(random(0, 625), -5, 50);
   blob.setStroke(0);
   blob.setStrokeWeight(2);
   blob.setFillColor(yellow);
@@ -218,7 +269,9 @@ void makeBox() {
   //box.setStrokeWeight(2);
   //box.setFillColor(green);
 
-  box.attachImage(funifrog);
+  box.setStroke(0);
+  box.setStrokeWeight(2);
+  box.setFillColor(green);
 
   //set physical properties
   box.setDensity(0.2);
