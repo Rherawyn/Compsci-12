@@ -5,7 +5,7 @@ import fisica.*;
 Button gravity;
 Button generation;
 
-ArrayList <GameObject> objects;
+ArrayList <Blob> blobs;
 
 boolean mouseReleased;
 boolean wasPressed;
@@ -50,14 +50,14 @@ void setup() {
   size(1000, 800);
 
   //buttons
-  gravity = new Button("Gravity", 100, 100, 100, 75, blue, green);
-  generation = new Button("Generate", 700, 100, 100, 75, red, green);
+  gravity = new Button("Gravity", 800, 500, 100, 75, blue, green);
+  generation = new Button("Generate", 800, 100, 100, 75, red, green);
 
   //initialise world
   makeWorld();
 
   //objetcs
-  objects = new ArrayList();
+  blobs = new ArrayList();
 
   //add terrain to world
   makeBorder();

@@ -1,8 +1,10 @@
-boolean addblob = true;
+boolean addblob = false;
 int booldown = 0;
 
 void game() {
-  println("x: " + mouseX + " y: " + mouseY);
+  //println("x: " + mouseX + " y: " + mouseY);
+  
+ // println(blobs.size());
   background(background);
 
   if (grav == true) {
@@ -13,16 +15,15 @@ void game() {
 
   booldown ++;
   if (addblob == true && booldown > 25) {
-    objects.add(new Blob());
+    blobs.add(new Blob(mouseX, -5, 1));
     addblob = false;
     booldown = 0;
   }
 
-  for (int i = 0; i < objects.size(); i++) {
-    GameObject obj = objects.get(i);
-    obj.show();
-    obj.act();
-    if (obj.lives == 0) objects.remove(i);
+  for (int i = 0; i < blobs.size(); i++) {
+    Blob b = blobs.get(i);
+    //if (b.lives == 0) blobs.remove(i);
+    b.show();
   }
 
   //cloud 1
@@ -105,7 +106,7 @@ void makeBlob4() {
 }
 
 void gameMousePresed() {
-  if (mouseX > 0 && mouseX < 625) {
+  if (mouseX > 10 && mouseX < 615) {
     addblob = true;
   }
 }
