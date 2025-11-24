@@ -50,8 +50,8 @@ void setup() {
   size(1000, 800);
 
   //buttons
-  gravity = new Button("Gravity", 800, 500, 100, 75, blue, green);
-  generation = new Button("Generate", 800, 100, 100, 75, red, green);
+  gravity = new Button("Gravity", 800, 700, 100, 75, blue, green);
+  generation = new Button("Generate", 800, 500, 100, 75, red, green);
 
   //initialise world
   makeWorld();
