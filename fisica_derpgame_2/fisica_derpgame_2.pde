@@ -2,8 +2,8 @@
 
 import fisica.*;
 
-Button gravity;
-Button generation;
+Button reset;
+Button start;
 
 ArrayList <Circle> circles;
 
@@ -13,7 +13,6 @@ boolean wasPressed;
 int c1 = 200;
 int c2 = 500;
 
-boolean grav = true;
 boolean gen = true;
 
 //palette
@@ -44,14 +43,14 @@ FPoly funnelRight;
 FWorld world;
 
 void setup() {
-  mode = GAME;
+  mode = INTRO;
   
   //make window
   size(1000, 800);
 
   //buttons
-  gravity = new Button("Gravity", 800, 700, 100, 75, blue, green);
-  generation = new Button("Generate", 800, 500, 100, 75, red, green);
+  reset = new Button("RESET", 800, 700, 100, 75, red, white);
+  start = new Button("START", 500, 400, 500, 200, red, white);
 
   //initialise world
   makeWorld();

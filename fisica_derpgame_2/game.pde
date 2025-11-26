@@ -8,12 +8,6 @@ void game() {
 
   background(background);
 
-  if (grav == true) {
-    world.setGravity(0, 900);
-  } else {
-    world.setGravity(0, 0);
-  }
-
   //ball generatiom
   if (type >= 0 && type < 4) size = 50;
   else if (type >= 4 && type < 7) size = 62.5;
@@ -40,10 +34,13 @@ void game() {
   circle(700, 50, size);
 
   //ball physics
-  for (int i = 0; i < circles.size(); i++) {
+  for (int i = 0; i < circles.size(); i++) {  
     Circle c = circles.get(i);
     //if (c.lives == 0) circles.remove(i);
     c.show();
+    if (c.getY() < 0) {
+     mode = GAMEOVER; 
+    }
     if (c.collide())
       break;
   }
@@ -51,14 +48,18 @@ void game() {
   world.step();  //get box2D to calculate all the forces and new positions
   world.draw();  //ask box2D to convert this world to processing screen coordinates and draw
 
-  gravity.show();
-  generation.show();
+  reset.show();
 
-  if (gravity.clicked) {
-    grav = !grav;
+  if (reset.clicked && circles.size() > 0) {
+    for (int i = 0; i < circles.size(); i++) {
+        circles.remove(circles.get(0  ));
+        world.remove(circles.get(0));
+    }
   }
+  
+  print(circles.size());
 
-  if (generation.clicked) {
+  if (start.clicked) {
     gen = !gen;
   }
 }
