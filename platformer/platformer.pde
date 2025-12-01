@@ -16,44 +16,57 @@ color pink = color(255, 174, 201);
 color red = color(255, 0, 0);
 
 PImage map;
-int x = 0;
-int y = 0;
-int gridsize = 48;
+int gridSize = 48;
+float zoom = 1;
+boolean spacekey, upkey, downkey, rightkey, leftkey, wkey, akey, skey, dkey, qkey, ekey;
+FPlayer player;
 
 FWorld world;
 
 void setup() {
   size(1200, 800);
-
   Fisica.init(this);
-  world = new FWorld();
-
+  
   map = loadImage("spawnroom.png");
+  loadWorld(map);
+  loadPlayer();
+}
 
-  //load the world
-  while (y < map.height) { // keep going until we get to the end o the map image
-
-    color c = map.get(x, y); // get a pixel's color from the map and process it
-
-    if ( c == black) {
-      FBox b = new FBox(gridsize, gridsize);
-      b.setFillColor(black);
-      b.setPosition(x*gridsize-24, y*gridsize-24);
-      b.setStatic(true);
-      world.add(b);
-    }
-
-    x++; // move down the row
-
-    if (x == map.width) { // if we ge tto the end of the row then go back to the beginning and down to the next row
-      x = 0;
-      y++;
+void loadWorld(PImage img) {
+  world = new FWorld(-10000, -10000, 10000, 10000);
+  world.setGravity(0, 1100);
+  
+  for (int y = 0; y < img.height; y++) {
+    for (int x = 0; x < img.width; x++) {
+      color c = img.get(x, y);
+      if (c == black) {
+        FBox b = new FBox(gridSize, gridSize);
+        b.setPosition(x*gridSize, y*gridSize);
+        b.setRestitution(0);
+        b.setFriction(4);
+        b.setStatic(true);
+        world.add(b);
+      }
     }
   }
 }
 
-void draw() {
-  background(deepblue);
+void loadPlayer() {
+  player = new FPlayer();
+  world.add(player);
+}
+
+void drawWorld() {
+  pushMatrix();
+  translate(-player.getX() * zoom + width/2, -player.getY() * zoom + height/2);
+  scale(zoom);
   world.step();
   world.draw();
+  popMatrix();
+}
+
+void draw() {
+  background(deepblue);
+  drawWorld();
+  player.act();
 }
