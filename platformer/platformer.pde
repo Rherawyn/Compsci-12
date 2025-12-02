@@ -7,11 +7,11 @@ import fisica.*;
 color black = #000000;
 color green = color(34, 117, 76);
 color lgreen = color(181, 230, 29);
-color blue = color(153, 217, 234);
+color blue = color(5, 209, 177);
 color yellow = color(255, 242, 0);
 //color player = color ();
 color brown = color(185, 122, 87);
-color deepblue = color(5, 209, 177);
+color deepblue = color(33,78,165);
 color pink = color(255, 174, 201);
 color red = color(255, 0, 0);
 
@@ -42,6 +42,7 @@ void loadWorld(PImage img) {
       if (c == black) {
         FBox b = new FBox(gridSize, gridSize);
         b.setPosition(x*gridSize, y*gridSize);
+        b.setFillColor(black);
         b.setRestitution(0);
         b.setFriction(4);
         b.setStatic(true);
