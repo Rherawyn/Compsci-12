@@ -2,7 +2,7 @@ class FPlayer extends FBox {
   FBox f;
   FPlayer() {
     super(gridSize, gridSize);
-    setPosition(1632, 239);
+    setPosition(pSpawnX, pSpawnY);
     setFillColor(red);
     feet();
   }

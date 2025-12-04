@@ -11,13 +11,14 @@ color blue = color(5, 209, 177);
 color yellow = color(255, 242, 0);
 //color player = color ();
 color brown = color(185, 122, 87);
-color deepblue = color(33,78,165);
+color deepblue = color(33, 78, 165);
 color pink = color(255, 174, 201);
 color red = color(255, 0, 0);
 
 PImage map;
 int gridSize = 48;
 float zoom = 1;
+float pSpawnX, pSpawnY;
 boolean spacekey, upkey, downkey, rightkey, leftkey, wkey, akey, skey, dkey, qkey, ekey;
 FPlayer player;
 
@@ -26,7 +27,7 @@ FWorld world;
 void setup() {
   size(1200, 800);
   Fisica.init(this);
-  
+
   map = loadImage("spawnroom.png");
   loadWorld(map);
   loadPlayer();
@@ -35,13 +36,23 @@ void setup() {
 void loadWorld(PImage img) {
   world = new FWorld(-10000, -10000, 10000, 10000);
   world.setGravity(0, 1100);
-  
+
   for (int y = 0; y < img.height; y++) {
     for (int x = 0; x < img.width; x++) {
       color c = img.get(x, y);
       if (c == black) {
         FBox b = new FBox(gridSize, gridSize);
         b.setPosition(x*gridSize, y*gridSize);
+        b.setFillColor(black);
+        b.setRestitution(0);
+        b.setFriction(4);
+        b.setStatic(true);
+        world.add(b);
+      } else if (c == color(181, 230, 29)) {
+        FBox b = new FBox(gridSize, gridSize);
+        b.setPosition(x*gridSize, y*gridSize);
+        pSpawnX = x*gridSize;
+        pSpawnY = y*gridSize - gridSize - 1;
         b.setFillColor(black);
         b.setRestitution(0);
         b.setFriction(4);
