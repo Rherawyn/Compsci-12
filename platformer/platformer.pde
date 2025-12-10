@@ -16,6 +16,8 @@ color pink = color(255, 174, 201);
 color red = color(255, 0, 0);
 
 PImage map;
+PImage[] ground = new PImage[5];
+
 int gridSize = 48;
 float zoom = 1;
 float pSpawnX, pSpawnY;
@@ -27,13 +29,17 @@ FWorld world;
 void setup() {
   size(1200, 800);
   Fisica.init(this);
+  
+  for (int i = 1; i < ground.length; i++) {
+  ground[i-1] = loadImage("ftile" + i + ".png");
+}
 
   map = loadImage("spawnroom.png");
-  loadWorld(map);
+  loadWorld(map, ground);
   loadPlayer();
 }
 
-void loadWorld(PImage img) {
+void loadWorld(PImage img, PImage[] imgs) {
   world = new FWorld(-10000, -10000, 10000, 10000);
   world.setGravity(0, 1100);
 
@@ -43,6 +49,9 @@ void loadWorld(PImage img) {
       if (c == black) {
         FBox b = new FBox(gridSize, gridSize);
         b.setPosition(x*gridSize, y*gridSize);
+        b.setName("block");
+        b.attachImage(ground[x%4]);
+        ground[x%4].resize(48, 48);
         b.setFillColor(black);
         b.setRestitution(0);
         b.setFriction(4);
@@ -53,7 +62,16 @@ void loadWorld(PImage img) {
         b.setPosition(x*gridSize, y*gridSize);
         pSpawnX = x*gridSize;
         pSpawnY = y*gridSize - gridSize - 1;
+        b.setName("spawn");
         b.setFillColor(black);
+        b.setRestitution(0);
+        b.setFriction(4);
+        b.setStatic(true);
+        world.add(b);
+      } else if (c == red) {
+        FBox b = new FBox(gridSize, gridSize);
+        b.setPosition(x*gridSize, y*gridSize);
+        b.setName("spike");
         b.setRestitution(0);
         b.setFriction(4);
         b.setStatic(true);

@@ -1,5 +1,6 @@
 class FPlayer extends FBox {
   FBox f;
+  int lives = 1;
   FPlayer() {
     super(gridSize, gridSize);
     setPosition(pSpawnX, pSpawnY);
@@ -32,5 +33,22 @@ class FPlayer extends FBox {
     }
     //feet movement
     f.setPosition(getX(), getY()+30);
+
+    death();
+
+    if (lives < 0) {
+      world.remove(this);
+    }
+  }
+
+  void death() {
+    ArrayList<FContact> contacts = this.getContacts();
+    for (int i = 0; i < contacts.size(); i++) {
+      FContact c = contacts.get(i);
+      if (c.contains("spike")) {
+        lives--;
+        print(lives);
+      }
+    }
   }
 }
