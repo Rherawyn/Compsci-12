@@ -46,8 +46,7 @@ class FPlayer extends FBox {
     for (int i = 0; i < contacts.size(); i++) {
       FContact c = contacts.get(i);
       if (c.contains("spike")) {
-        lives--;
-        print(lives);
+        this.setPosition(pSpawnX,pSpawnY);
       }
     }
   }

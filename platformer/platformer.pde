@@ -25,14 +25,17 @@ boolean spacekey, upkey, downkey, rightkey, leftkey, wkey, akey, skey, dkey, qke
 FPlayer player;
 
 FWorld world;
+ArrayList<Integer> bposx = new ArrayList<Integer>();
+ArrayList<Integer> bposy = new ArrayList<Integer>();
 
 void setup() {
   size(1200, 800);
   Fisica.init(this);
-  
+  rectMode(CENTER);
+
   for (int i = 1; i < ground.length; i++) {
-  ground[i-1] = loadImage("ftile" + i + ".png");
-}
+    ground[i-1] = loadImage("ftile" + i + ".png");
+  }
 
   map = loadImage("spawnroom.png");
   loadWorld(map, ground);
@@ -42,32 +45,42 @@ void setup() {
 void loadWorld(PImage img, PImage[] imgs) {
   world = new FWorld(-10000, -10000, 10000, 10000);
   world.setGravity(0, 1100);
+  
+  FCompound blocks = new FCompound();
 
   for (int y = 0; y < img.height; y++) {
     for (int x = 0; x < img.width; x++) {
       color c = img.get(x, y);
-      if (c == black) {
+      if (c == color(127,127,127)) {
+        bposx.add(x*gridSize);
+        bposy.add(y*gridSize);
+      } else if (c == black) {
         FBox b = new FBox(gridSize, gridSize);
         b.setPosition(x*gridSize, y*gridSize);
         b.setName("block");
-        b.attachImage(ground[x%4]);
-        ground[x%4].resize(48, 48);
+        if (img.get(x, y-1) != black && img.get(x, y-1) != color(127,127,127)) {
+          b.attachImage(ground[x%4]);
+          ground[x%4].resize(48, 48);
+        }
         b.setFillColor(black);
         b.setRestitution(0);
         b.setFriction(4);
         b.setStatic(true);
-        world.add(b);
+        blocks.addBody(b);
+        //world.add(b);
       } else if (c == color(181, 230, 29)) {
         FBox b = new FBox(gridSize, gridSize);
         b.setPosition(x*gridSize, y*gridSize);
         pSpawnX = x*gridSize;
         pSpawnY = y*gridSize - gridSize - 1;
         b.setName("spawn");
+        b.attachImage(ground[x%4]);
         b.setFillColor(black);
         b.setRestitution(0);
         b.setFriction(4);
         b.setStatic(true);
-        world.add(b);
+        blocks.addBody(b);
+        //world.add(b);
       } else if (c == red) {
         FBox b = new FBox(gridSize, gridSize);
         b.setPosition(x*gridSize, y*gridSize);
@@ -79,6 +92,8 @@ void loadWorld(PImage img, PImage[] imgs) {
       }
     }
   }
+  blocks.setStatic(true);
+  world.add(blocks);
 }
 
 void loadPlayer() {
@@ -90,6 +105,10 @@ void drawWorld() {
   pushMatrix();
   translate(-player.getX() * zoom + width/2, -player.getY() * zoom + height/2);
   scale(zoom);
+  for(int i = 0; i < bposx.size(); i++) {
+   fill(black);
+   rect(bposx.get(i),bposy.get(i),gridSize,gridSize); 
+  }
   world.step();
   world.draw();
   popMatrix();
