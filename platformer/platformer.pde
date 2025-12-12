@@ -23,10 +23,14 @@ float zoom = 1;
 float pSpawnX, pSpawnY;
 boolean spacekey, upkey, downkey, rightkey, leftkey, wkey, akey, skey, dkey, qkey, ekey;
 FPlayer player;
+FFlenemy enemy;
 
 FWorld world;
 ArrayList<Integer> bposx = new ArrayList<Integer>();
 ArrayList<Integer> bposy = new ArrayList<Integer>();
+
+ArrayList<Integer> eSpawnX = new ArrayList<Integer>();
+ArrayList<Integer> eSpawnY = new ArrayList<Integer>();
 
 void setup() {
   size(1200, 800);
@@ -45,20 +49,20 @@ void setup() {
 void loadWorld(PImage img, PImage[] imgs) {
   world = new FWorld(-10000, -10000, 10000, 10000);
   world.setGravity(0, 1100);
-  
+
   FCompound blocks = new FCompound();
 
   for (int y = 0; y < img.height; y++) {
     for (int x = 0; x < img.width; x++) {
       color c = img.get(x, y);
-      if (c == color(127,127,127)) {
+      if (c == color(127, 127, 127)) {
         bposx.add(x*gridSize);
         bposy.add(y*gridSize);
       } else if (c == black) {
         FBox b = new FBox(gridSize, gridSize);
         b.setPosition(x*gridSize, y*gridSize);
         b.setName("block");
-        if (img.get(x, y-1) != black && img.get(x, y-1) != color(127,127,127)) {
+        if (img.get(x, y-1) != black && img.get(x, y-1) != color(127, 127, 127) && img.get(x, y-1) != red) {
           b.attachImage(ground[x%4]);
           ground[x%4].resize(48, 48);
         }
@@ -81,6 +85,10 @@ void loadWorld(PImage img, PImage[] imgs) {
         b.setStatic(true);
         blocks.addBody(b);
         //world.add(b);
+      } else if (c == color(255, 127, 39)) {
+        eSpawnX.add(x*gridSize);
+        eSpawnY.add(y*gridSize);
+        //world.add(b);
       } else if (c == red) {
         FBox b = new FBox(gridSize, gridSize);
         b.setPosition(x*gridSize, y*gridSize);
@@ -101,13 +109,20 @@ void loadPlayer() {
   world.add(player);
 }
 
+void loadEnemies() {
+  for (int i : eSpawnX) {
+    enemy = new FFlenemy();
+    world.add(enemy);
+  }
+}
+
 void drawWorld() {
   pushMatrix();
   translate(-player.getX() * zoom + width/2, -player.getY() * zoom + height/2);
   scale(zoom);
-  for(int i = 0; i < bposx.size(); i++) {
-   fill(black);
-   rect(bposx.get(i),bposy.get(i),gridSize,gridSize); 
+  for (int i = 0; i < bposx.size(); i++) {
+    fill(black);
+    rect(bposx.get(i), bposy.get(i), gridSize, gridSize);
   }
   world.step();
   world.draw();

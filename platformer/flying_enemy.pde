@@ -1,40 +1,33 @@
-class FPlayer extends FBox {
+class FFlenemy extends FBox {
   FBox f;
   int lives = 1;
-  FPlayer() {
+  FFlenemy() {
     super(gridSize, gridSize);
-    setPosition(pSpawnX, pSpawnY);
+    for (int i : eSpawnX) {
+      setPosition(eSpawnX.get(i), eSpawnY.get(i));
+    }
     setRotatable(false);
     setFillColor(red);
-    feet();
-  }
-
-  void feet() {
-    FBox feet = new FBox(25, 10);
-    feet.setNoFill();
-    feet.setNoStroke();
-    feet.setPosition(getX(), getY()+30);
-    feet.setSensor(true);
-    f = feet;
-    world.add(feet);
   }
 
   void act() {
     setRestitution(0);
-    //player movement
-    float vy = player.getVelocityY();
+    float vy = this.getVelocityY();
     float vx = 200;
-    if (akey) vx = -200;
-    if (dkey) vx = 200;
-    if(!akey && !dkey) vx = 0;
+    if (dist(player.getX(), player.getY(), this.getX(), this.getY()) < 500) {
+      //setPosition(this.getX()-(this.getX()-player.getX() / abs(this.getX()-player.getX()) * 5), this.getY()-(this.getY()-player.getY() / abs(this.getY()-player.getY()) * 5));
+      vx = this.getX()-(this.getX()-player.getX() / abs(this.getX()-player.getX()) * 5);
+      vy = this.getY()-(this.getY()-player.getY() / abs(this.getY()-player.getY()) * 5);
+    } else {
+      vx = 0;
+      vy = 0;
+    }
     setVelocity(vx, vy);
     ArrayList<FContact> contacts = f.getContacts();
     if (wkey && contacts.size() > 1|| spacekey && contacts.size() > 1) {
       wkey = false;
       setVelocity(getVelocityX(), -650);
     }
-    //feet movement
-    f.setPosition(getX(), getY()+30);
 
     death();
 
@@ -48,7 +41,7 @@ class FPlayer extends FBox {
     for (int i = 0; i < contacts.size(); i++) {
       FContact c = contacts.get(i);
       if (c.contains("spike")) {
-        this.setPosition(pSpawnX,pSpawnY);
+        lives--;
       }
     }
   }
