@@ -86,8 +86,10 @@ void loadWorld(PImage img, PImage[] imgs) {
         blocks.addBody(b);
         //world.add(b);
       } else if (c == color(255, 127, 39)) {
-        eSpawnX.add(x*gridSize);
-        eSpawnY.add(y*gridSize);
+        //eSpawnX.add(x*gridSize);
+        //eSpawnY.add(y*gridSize);
+        enemy + i = new FFlenemy(x*gridSize, y*gridSize);
+        world.add(enemy);
         //world.add(b);
       } else if (c == red) {
         FBox b = new FBox(gridSize, gridSize);
@@ -109,13 +111,6 @@ void loadPlayer() {
   world.add(player);
 }
 
-void loadEnemies() {
-  for (int i : eSpawnX) {
-    enemy = new FFlenemy();
-    world.add(enemy);
-  }
-}
-
 void drawWorld() {
   pushMatrix();
   translate(-player.getX() * zoom + width/2, -player.getY() * zoom + height/2);
@@ -133,4 +128,7 @@ void draw() {
   background(deepblue);
   drawWorld();
   player.act();
+  for(int i = 0; i < FFlenemy.length; i++) {
+    enemy.act();
+  }
 }

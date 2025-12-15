@@ -1,33 +1,29 @@
 class FFlenemy extends FBox {
-  FBox f;
   int lives = 1;
-  FFlenemy() {
+  FFlenemy(int x, int y) {
     super(gridSize, gridSize);
-    for (int i : eSpawnX) {
-      setPosition(eSpawnX.get(i), eSpawnY.get(i));
-    }
+    setPosition(x, y-gridSize);
     setRotatable(false);
     setFillColor(red);
+    setName("flenemy");
   }
 
   void act() {
     setRestitution(0);
-    float vy = this.getVelocityY();
-    float vx = 200;
-    if (dist(player.getX(), player.getY(), this.getX(), this.getY()) < 500) {
+    float vy;
+    float vx;
+    if (dist(player.getX(), player.getY(), this.getX(), this.getY()) < 5000) {
       //setPosition(this.getX()-(this.getX()-player.getX() / abs(this.getX()-player.getX()) * 5), this.getY()-(this.getY()-player.getY() / abs(this.getY()-player.getY()) * 5));
-      vx = this.getX()-(this.getX()-player.getX() / abs(this.getX()-player.getX()) * 5);
-      vy = this.getY()-(this.getY()-player.getY() / abs(this.getY()-player.getY()) * 5);
+      //vx = this.getX()-(this.getX()-player.getX() / abs(this.getX()-player.getX()) * 5);
+      //vy = this.getY()-(this.getY()-player.getY() / abs(this.getY()-player.getY()) * 5);
+      vx = 0;
+      vy = -1000000;
     } else {
       vx = 0;
       vy = 0;
     }
-    setVelocity(vx, vy);
-    ArrayList<FContact> contacts = f.getContacts();
-    if (wkey && contacts.size() > 1|| spacekey && contacts.size() > 1) {
-      wkey = false;
-      setVelocity(getVelocityX(), -650);
-    }
+    println(dist(player.getX(), player.getY(), this.getX(), this.getY()));
+    setVelocity(vx, this.getVelocityY() + vy);
 
     death();
 

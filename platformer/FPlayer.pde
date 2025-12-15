@@ -47,7 +47,7 @@ class FPlayer extends FBox {
     ArrayList<FContact> contacts = this.getContacts();
     for (int i = 0; i < contacts.size(); i++) {
       FContact c = contacts.get(i);
-      if (c.contains("spike")) {
+      if (c.contains("spike") || c.contains("flenemydd")) {
         this.setPosition(pSpawnX,pSpawnY);
       }
     }
