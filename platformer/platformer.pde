@@ -88,7 +88,7 @@ void loadWorld(PImage img, PImage[] imgs) {
       } else if (c == color(255, 127, 39)) {
         //eSpawnX.add(x*gridSize);
         //eSpawnY.add(y*gridSize);
-        enemy + i = new FFlenemy(x*gridSize, y*gridSize);
+        enemy = new FFlenemy(x*gridSize, y*gridSize);
         world.add(enemy);
         //world.add(b);
       } else if (c == red) {
@@ -128,7 +128,4 @@ void draw() {
   background(deepblue);
   drawWorld();
   player.act();
-  for(int i = 0; i < FFlenemy.length; i++) {
-    enemy.act();
-  }
 }

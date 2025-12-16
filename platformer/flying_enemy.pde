@@ -1,7 +1,8 @@
-class FFlenemy extends FBox {
+class FFlenemy extends FGameObject {
   int lives = 1;
+  
   FFlenemy(int x, int y) {
-    super(gridSize, gridSize);
+    super();
     setPosition(x, y-gridSize);
     setRotatable(false);
     setFillColor(red);
@@ -25,20 +26,10 @@ class FFlenemy extends FBox {
     println(dist(player.getX(), player.getY(), this.getX(), this.getY()));
     setVelocity(vx, this.getVelocityY() + vy);
 
-    death();
+    //collisions("fplayer","");
 
     if (lives < 0) {
       world.remove(this);
-    }
-  }
-
-  void death() {
-    ArrayList<FContact> contacts = this.getContacts();
-    for (int i = 0; i < contacts.size(); i++) {
-      FContact c = contacts.get(i);
-      if (c.contains("spike")) {
-        lives--;
-      }
     }
   }
 }
