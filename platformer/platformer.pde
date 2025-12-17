@@ -22,8 +22,8 @@ int gridSize = 48;
 float zoom = 1;
 float pSpawnX, pSpawnY;
 boolean spacekey, upkey, downkey, rightkey, leftkey, wkey, akey, skey, dkey, qkey, ekey;
+ArrayList<FGameObject> enemies = new ArrayList<FGameObject>();
 FPlayer player;
-FFlenemy enemy;
 
 FWorld world;
 ArrayList<Integer> bposx = new ArrayList<Integer>();
@@ -88,7 +88,8 @@ void loadWorld(PImage img, PImage[] imgs) {
       } else if (c == color(255, 127, 39)) {
         //eSpawnX.add(x*gridSize);
         //eSpawnY.add(y*gridSize);
-        enemy = new FFlenemy(x*gridSize, y*gridSize);
+        FFlenemy enemy = new FFlenemy(x*gridSize, y*gridSize);
+        enemies.add(enemy);
         world.add(enemy);
         //world.add(b);
       } else if (c == red) {
@@ -111,6 +112,13 @@ void loadPlayer() {
   world.add(player);
 }
 
+void actWorld() {
+  for(int i = 0; i < enemies.size(); i++) {
+   FGameObject e = enemies.get(i);
+   e.act();
+  }
+}
+
 void drawWorld() {
   pushMatrix();
   translate(-player.getX() * zoom + width/2, -player.getY() * zoom + height/2);
@@ -127,5 +135,6 @@ void drawWorld() {
 void draw() {
   background(deepblue);
   drawWorld();
+  actWorld();
   player.act();
 }
