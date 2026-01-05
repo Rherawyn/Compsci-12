@@ -15,13 +15,25 @@ color deepblue = color(33, 78, 165);
 color pink = color(255, 174, 201);
 color red = color(255, 0, 0);
 
+//mode frameworks
+final int INTRO = 0;
+final int GAME = 1;
+final int GAMEOVER = 2;
+final int PAUSE = 3;
+int mode = 1;
+
+//world stuff
 PImage map;
 PImage[] ground = new PImage[5];
 
 int gridSize = 48;
 float zoom = 1;
 float pSpawnX, pSpawnY;
+
+//controls
+boolean mouseReleased, wasPressed;
 boolean spacekey, upkey, downkey, rightkey, leftkey, wkey, akey, skey, dkey, qkey, ekey;
+
 ArrayList<FGameObject> enemies = new ArrayList<FGameObject>();
 FPlayer player;
 
@@ -133,8 +145,11 @@ void drawWorld() {
 }
 
 void draw() {
-  background(deepblue);
-  drawWorld();
-  actWorld();
-  player.act();
+  
+  click();
+
+  if (mode == INTRO) intro();
+  else if (mode == GAME) game();
+  else if (mode == PAUSE) pause();
+  else if (mode == GAMEOVER) gameOver();
 }
