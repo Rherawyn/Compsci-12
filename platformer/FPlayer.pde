@@ -32,6 +32,7 @@ class FPlayer extends FGameObject {
   }
 
   void act() {
+    sword(player.getX(),player.getY());
     setRestitution(0);
     //player movement
     float vy = player.getVelocityY();
@@ -73,5 +74,16 @@ class FPlayer extends FGameObject {
     if (lives < 0) {
       world.remove(this);
     }
+  }
+
+  void sword(float x, float y) {
+    strokeWeight(5);
+    stroke(255);
+    pushMatrix();
+    translate(x,y);
+    bezier(-60, -65, -35, -190, 35, -190, 60, -65);
+    bezier(-60, -65, -35, -130, 35, -130, 60, -65);
+    popMatrix();
+    stroke(0);
   }
 }
