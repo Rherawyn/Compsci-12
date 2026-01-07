@@ -1,5 +1,5 @@
 void game() {
-  background(deepblue);
+  background(bg);
   drawWorld();
   actWorld();
   player.act();

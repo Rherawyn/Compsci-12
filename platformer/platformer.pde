@@ -23,6 +23,7 @@ final int PAUSE = 3;
 int mode = 1;
 
 //world stuff
+PImage bg;
 PImage map;
 PImage[] ground = new PImage[5];
 
@@ -46,6 +47,7 @@ ArrayList<Integer> eSpawnY = new ArrayList<Integer>();
 
 void setup() {
   size(1200, 800);
+  bg = loadImage("background2.png");
   Fisica.init(this);
   rectMode(CENTER);
 

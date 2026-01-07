@@ -2,6 +2,7 @@ class FPlayer extends FGameObject {
   FBox feet;
   FCircle attack;
   int lives = 1;
+  int attackCooldown = 0;
   float AtPX;
   float AtPY;
   FPlayer() {
@@ -28,11 +29,13 @@ class FPlayer extends FGameObject {
   }
 
   void attack() {
-    attack.setPosition(this.getX() + AtPX, this.getY() + AtPY);
+    if (attackCooldown <= -15) {
+      attack.setPosition(this.getX() + AtPX, this.getY() + AtPY);
+      attackCooldown = 15;
+    }
   }
 
   void act() {
-    sword(player.getX(),player.getY());
     setRestitution(0);
     //player movement
     float vy = player.getVelocityY();
@@ -57,17 +60,22 @@ class FPlayer extends FGameObject {
       AtPX = 0;
     }
 
-    attack.setPosition(0, 0);
+    //combat
+    sword(player.getX(), player.getY());
+    attackCooldown--;
+    if (attackCooldown <= 0) {
+      attack.setPosition(0, 0);
+    }
     attack.setVelocity(this.getVelocityX(), this.getVelocityY()-18.3);
 
     setVelocity(vx, vy);
     ArrayList<FContact> contacts = feet.getContacts();
-    if (wkey && contacts.size() > 1|| spacekey && contacts.size() > 1) {
+    if (spacekey && contacts.size() > 1) {
       wkey = false;
       setVelocity(getVelocityX(), -650);
     }
 
-    if (collisions("spike", "flenemy")) {
+    if (collisions("spike" , "flenemy")) {
       player.setPosition(pSpawnX, pSpawnY);
     }
 
@@ -80,7 +88,7 @@ class FPlayer extends FGameObject {
     strokeWeight(5);
     stroke(255);
     pushMatrix();
-    translate(x,y);
+    translate(x, y);
     bezier(-60, -65, -35, -190, 35, -190, 60, -65);
     bezier(-60, -65, -35, -130, 35, -130, 60, -65);
     popMatrix();
