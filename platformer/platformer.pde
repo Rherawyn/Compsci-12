@@ -31,6 +31,12 @@ int gridSize = 48;
 float zoom = 1;
 float pSpawnX, pSpawnY;
 
+//character animations
+PImage[] pRun;
+PImage[] pIdle;
+PImage[] pJump;
+PImage[] pAction;
+
 //controls
 boolean mouseReleased, wasPressed;
 boolean spacekey, upkey, downkey, rightkey, leftkey, wkey, akey, skey, dkey, qkey, ekey;
@@ -126,10 +132,31 @@ void loadPlayer() {
   world.add(player);
 }
 
+void loadImages() {
+  pRun = new PImage[1];
+  pRun[0] = loadImage("pRun1.png");
+  pRun[1] = loadImage("pRun2.png");
+  pRun[2] = loadImage("pRun3.png");
+  pRun[3] = loadImage("pRun4.png");
+  pRun[4] = loadImage("pRun5.png");
+  pRun[5] = loadImage("pRun6.png");
+
+  pJump = new PImage[1];
+  pJump[0] = loadImage("pJump1.png");
+
+  pIdle = new PImage[4];
+  pIdle[0] = loadImage("pIdle1.png");
+  pIdle[1] = loadImage("pIdle2.png");
+  pIdle[2] = loadImage("pIdle3.png");
+  pIdle[3] = loadImage("pIdle4.png");
+  
+  pAction = pIdle;
+}
+
 void actWorld() {
-  for(int i = 0; i < enemies.size(); i++) {
-   FGameObject e = enemies.get(i);
-   e.act();
+  for (int i = 0; i < enemies.size(); i++) {
+    FGameObject e = enemies.get(i);
+    e.act();
   }
 }
 
@@ -147,7 +174,7 @@ void drawWorld() {
 }
 
 void draw() {
-  
+
   click();
 
   if (mode == INTRO) intro();

@@ -5,8 +5,11 @@ class FPlayer extends FGameObject {
   int attackCooldown = 0;
   float AtPX;
   float AtPY;
+  int frame;
+  
   FPlayer() {
     super();
+    frame = 0;
     setPosition(pSpawnX, pSpawnY);
     setRotatable(false);
     setFillColor(red);
@@ -37,6 +40,8 @@ class FPlayer extends FGameObject {
 
   void act() {
     setRestitution(0);
+    //animation
+    animate();
     //player movement
     float vy = player.getVelocityY();
     float vx = 200;
@@ -48,17 +53,21 @@ class FPlayer extends FGameObject {
     if (akey) {
       AtPX = -70;
       AtPY = 0;
+      pAction = pRun;
     } else if (dkey) {
       AtPX = 70;
       AtPY = 0;
+      pAction = pRun;
     }
     if (wkey) {
       AtPY = -70;
       AtPX = 0;
+      pAction = pRun;
     } else if (skey) {
       AtPY = 70;
       AtPX = 0;
-    }
+      pAction = pRun;
+    } 
 
     //combat
     sword(player.getX(), player.getY());
@@ -82,6 +91,15 @@ class FPlayer extends FGameObject {
     if (lives < 0) {
       world.remove(this);
     }
+  }
+  
+  void animate() {
+    if(frame >= pAction.length) frame = 0;
+    if (frameCount % 5 == 0) {
+      attachImage(pAction[frame]);
+      frame++;
+    }
+    
   }
 
   void sword(float x, float y) {
