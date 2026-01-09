@@ -6,10 +6,14 @@ class FPlayer extends FGameObject {
   float AtPX;
   float AtPY;
   int frame;
-  
+  int direction;
+  final int L = -1;
+  final int R = 1;
+
   FPlayer() {
     super();
     frame = 0;
+    direction = R;
     setPosition(pSpawnX, pSpawnY);
     setRotatable(false);
     setFillColor(red);
@@ -17,6 +21,8 @@ class FPlayer extends FGameObject {
     feet.setRotatable(false);
     setName("fplayer");
     feet.setSensor(true);
+    feet.setNoFill();
+    feet.setNoStroke();
     world.add(feet);
 
     attack = new FCircle(60);
@@ -42,6 +48,24 @@ class FPlayer extends FGameObject {
     setRestitution(0);
     //animation
     animate();
+    ArrayList<FContact> Pcontacts = feet.getContacts();
+    if (Pcontacts.size() < 1) {
+      pAction = pJump;
+      if (dkey) {
+        direction = R;
+      } else if (akey) {
+        direction = L;
+      }
+    } else if (dkey) {
+      direction = R;
+      pAction = pRun;
+    } else if (akey) {
+      pAction = pRun;
+      direction = L;
+    } else {
+      pAction = pIdle;
+    }
+
     //player movement
     float vy = player.getVelocityY();
     float vx = 200;
@@ -53,21 +77,18 @@ class FPlayer extends FGameObject {
     if (akey) {
       AtPX = -70;
       AtPY = 0;
-      pAction = pRun;
     } else if (dkey) {
       AtPX = 70;
       AtPY = 0;
-      pAction = pRun;
     }
+
     if (wkey) {
       AtPY = -70;
       AtPX = 0;
-      pAction = pRun;
     } else if (skey) {
       AtPY = 70;
       AtPX = 0;
-      pAction = pRun;
-    } 
+    }
 
     //combat
     sword(player.getX(), player.getY());
@@ -84,7 +105,7 @@ class FPlayer extends FGameObject {
       setVelocity(getVelocityX(), -650);
     }
 
-    if (collisions("spike" , "flenemy")) {
+    if (collisions("spike", "flenemy")) {
       player.setPosition(pSpawnX, pSpawnY);
     }
 
@@ -92,14 +113,14 @@ class FPlayer extends FGameObject {
       world.remove(this);
     }
   }
-  
+
   void animate() {
-    if(frame >= pAction.length) frame = 0;
-    if (frameCount % 5 == 0) {
-      attachImage(pAction[frame]);
+    if (frame >= pAction.length) frame = 0;
+    if (frameCount % 7 == 0) {
+      if (direction == R) attachImage(pAction[frame]);
+      if (direction == L) attachImage(reverseImage(pAction[frame]));
       frame++;
     }
-    
   }
 
   void sword(float x, float y) {

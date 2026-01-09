@@ -62,6 +62,7 @@ void setup() {
   }
 
   map = loadImage("spawnroom.png");
+  loadImages();
   loadWorld(map, ground);
   loadPlayer();
 }
@@ -84,7 +85,6 @@ void loadWorld(PImage img, PImage[] imgs) {
         b.setName("block");
         if (img.get(x, y-1) != black && img.get(x, y-1) != color(127, 127, 127) && img.get(x, y-1) != red) {
           b.attachImage(ground[x%4]);
-          ground[x%4].resize(48, 48);
         }
         b.setFillColor(black);
         b.setRestitution(0);
@@ -133,7 +133,7 @@ void loadPlayer() {
 }
 
 void loadImages() {
-  pRun = new PImage[1];
+  pRun = new PImage[6];
   pRun[0] = loadImage("pRun1.png");
   pRun[1] = loadImage("pRun2.png");
   pRun[2] = loadImage("pRun3.png");
@@ -142,7 +142,7 @@ void loadImages() {
   pRun[5] = loadImage("pRun6.png");
 
   pJump = new PImage[1];
-  pJump[0] = loadImage("pJump1.png");
+  pJump[0] = loadImage("pJump.png");
 
   pIdle = new PImage[4];
   pIdle[0] = loadImage("pIdle1.png");

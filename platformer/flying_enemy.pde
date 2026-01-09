@@ -15,8 +15,8 @@ class FFlenemy extends FGameObject {
     float vx;
     if (dist(player.getX(), player.getY(), this.getX(), this.getY()) < 300) {
       //setPosition(this.getX()-(this.getX()-player.getX() / abs(this.getX()-player.getX()) * 5), this.getY()-(this.getY()-player.getY() / abs(this.getY()-player.getY()) * 5));
-      vx = ((player.getX() - this.getX()));
-      vy = ((player.getY() - this.getY()));
+      vx = (player.getX() - this.getX());
+      vy = (player.getY() - this.getY());
     } else {
       vx = 0;
       vy = -18.3;
