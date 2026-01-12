@@ -5,15 +5,20 @@ class FPlayer extends FGameObject {
   int attackCooldown = 0;
   float AtPX;
   float AtPY;
-  int frame;
-  int direction;
-  final int L = -1;
+  int pFrame;
+  int sFrame;
+  int pDirection;
+  int sDirection;
+  final int L = 0;
   final int R = 1;
+  final int U = 2;
+  final int D = 3;
 
   FPlayer() {
     super();
-    frame = 0;
-    direction = R;
+    pFrame = 0;
+    sFrame = 0;
+    pDirection = R;
     setPosition(pSpawnX, pSpawnY);
     setRotatable(false);
     setFillColor(red);
@@ -38,6 +43,7 @@ class FPlayer extends FGameObject {
   }
 
   void attack() {
+    sFrame = 0;
     if (attackCooldown <= -15) {
       attack.setPosition(this.getX() + AtPX, this.getY() + AtPY);
       attackCooldown = 15;
@@ -52,18 +58,33 @@ class FPlayer extends FGameObject {
     if (Pcontacts.size() < 1) {
       pAction = pJump;
       if (dkey) {
-        direction = R;
+        pDirection = R;
       } else if (akey) {
-        direction = L;
+        pDirection = L;
       }
     } else if (dkey) {
-      direction = R;
+      pDirection = R;
       pAction = pRun;
     } else if (akey) {
       pAction = pRun;
-      direction = L;
+      pDirection = L;
     } else {
       pAction = pIdle;
+    }
+
+    if (attackCooldown <=-12) {
+      if (dkey) {
+        sDirection = R;
+      }
+      if (akey) {
+        sDirection = L;
+      }
+      if (wkey) {
+        sDirection = U;
+      }
+      if (skey) {
+        sDirection = D;
+      }
     }
 
     //player movement
@@ -91,7 +112,6 @@ class FPlayer extends FGameObject {
     }
 
     //combat
-    sword(player.getX(), player.getY());
     attackCooldown--;
     if (attackCooldown <= 0) {
       attack.setPosition(0, 0);
@@ -101,7 +121,6 @@ class FPlayer extends FGameObject {
     setVelocity(vx, vy);
     ArrayList<FContact> contacts = feet.getContacts();
     if (spacekey && contacts.size() > 1) {
-      wkey = false;
       setVelocity(getVelocityX(), -650);
     }
 
@@ -110,27 +129,38 @@ class FPlayer extends FGameObject {
     }
 
     if (lives < 0) {
-      world.remove(this);
+      world.remove(this);  
     }
   }
 
   void animate() {
-    if (frame >= pAction.length) frame = 0;
+    //character
+    if (pFrame >= pAction.length) pFrame = 0;
     if (frameCount % 7 == 0) {
-      if (direction == R) attachImage(pAction[frame]);
-      if (direction == L) attachImage(reverseImage(pAction[frame]));
-      frame++;
+      if (pDirection == R) attachImage(pAction[pFrame]);
+      if (pDirection == L) attachImage(reverseImage(pAction[pFrame]));
+      pFrame++;
     }
-  }
-
-  void sword(float x, float y) {
-    strokeWeight(5);
-    stroke(255);
-    pushMatrix();
-    translate(x, y);
-    bezier(-60, -65, -35, -190, 35, -190, 60, -65);
-    bezier(-60, -65, -35, -130, 35, -130, 60, -65);
-    popMatrix();
-    stroke(0);
+    //weapon
+    if (sFrame >= sAction.length) sFrame = 0;
+    if (frameCount % 5 == 0) {
+      if (sDirection == R) {
+        attack.setRotation(radians(0));
+        attack.attachImage(sAction[sFrame]);
+      }
+      if (sDirection == L) {
+        attack.setRotation(radians(0));
+        attack.attachImage(reverseImage(sAction[sFrame]));
+      }
+      if (sDirection == U) {
+        attack.setRotation(radians(270));
+        attack.attachImage(sAction[sFrame]);
+      }
+      if (sDirection == D) {
+        attack.setRotation(radians(90));
+        attack.attachImage(sAction[sFrame]);
+      }
+      sFrame++;
+    }
   }
 }

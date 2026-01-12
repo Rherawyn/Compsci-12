@@ -37,6 +37,10 @@ PImage[] pIdle;
 PImage[] pJump;
 PImage[] pAction;
 
+//weapon animation
+PImage[] sAttack;
+PImage[] sAction;
+
 //controls
 boolean mouseReleased, wasPressed;
 boolean spacekey, upkey, downkey, rightkey, leftkey, wkey, akey, skey, dkey, qkey, ekey;
@@ -132,27 +136,6 @@ void loadPlayer() {
   world.add(player);
 }
 
-void loadImages() {
-  pRun = new PImage[6];
-  pRun[0] = loadImage("pRun1.png");
-  pRun[1] = loadImage("pRun2.png");
-  pRun[2] = loadImage("pRun3.png");
-  pRun[3] = loadImage("pRun4.png");
-  pRun[4] = loadImage("pRun5.png");
-  pRun[5] = loadImage("pRun6.png");
-
-  pJump = new PImage[1];
-  pJump[0] = loadImage("pJump.png");
-
-  pIdle = new PImage[4];
-  pIdle[0] = loadImage("pIdle1.png");
-  pIdle[1] = loadImage("pIdle2.png");
-  pIdle[2] = loadImage("pIdle3.png");
-  pIdle[3] = loadImage("pIdle4.png");
-  
-  pAction = pIdle;
-}
-
 void actWorld() {
   for (int i = 0; i < enemies.size(); i++) {
     FGameObject e = enemies.get(i);
@@ -181,4 +164,35 @@ void draw() {
   else if (mode == GAME) game();
   else if (mode == PAUSE) pause();
   else if (mode == GAMEOVER) gameOver();
+}
+
+void loadImages() {
+  pRun = new PImage[6];
+  pRun[0] = loadImage("pRun1.png");
+  pRun[1] = loadImage("pRun2.png");
+  pRun[2] = loadImage("pRun3.png");
+  pRun[3] = loadImage("pRun4.png");
+  pRun[4] = loadImage("pRun5.png");
+  pRun[5] = loadImage("pRun6.png");
+
+  pJump = new PImage[1];
+  pJump[0] = loadImage("pJump.png");
+
+  pIdle = new PImage[4];
+  pIdle[0] = loadImage("pIdle1.png");
+  pIdle[1] = loadImage("pIdle2.png");
+  pIdle[2] = loadImage("pIdle3.png");
+  pIdle[3] = loadImage("pIdle4.png");
+  
+  pAction = pIdle;
+  
+  sAttack = new PImage[6];
+  sAttack[0] = loadImage("sAttack1.png");
+  sAttack[1] = loadImage("sAttack2.png");
+  sAttack[2] = loadImage("sAttack3.png");
+  sAttack[3] = loadImage("sAttack4.png");
+  sAttack[4] = loadImage("sAttack5.png");
+  sAttack[5] = loadImage("sAttack6.png");
+  
+  sAction = sAttack;
 }
