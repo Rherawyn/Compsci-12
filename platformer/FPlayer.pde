@@ -5,7 +5,6 @@ class FPlayer extends FGameObject {
   int attackCooldown = 0;
   float AtPX;
   float AtPY;
-  int pFrame;
   int sFrame;
   int pDirection;
   int sDirection;
@@ -16,7 +15,7 @@ class FPlayer extends FGameObject {
 
   FPlayer() {
     super();
-    pFrame = 0;
+    mFrame = 0;
     sFrame = 0;
     pDirection = R;
     setPosition(pSpawnX, pSpawnY);
@@ -124,7 +123,7 @@ class FPlayer extends FGameObject {
       setVelocity(getVelocityX(), -650);
     }
 
-    if (collisions("spike", "flenemy")) {
+    if (isTouching("spike", "flenemy")) {
       player.setPosition(pSpawnX, pSpawnY);
     }
 
@@ -135,30 +134,30 @@ class FPlayer extends FGameObject {
 
   void animate() {
     //character
-    if (pFrame >= pAction.length) pFrame = 0;
+    if (mFrame >= pAction.length) mFrame = 0;
     if (frameCount % 7 == 0) {
-      if (pDirection == R) attachImage(pAction[pFrame]);
-      if (pDirection == L) attachImage(reverseImage(pAction[pFrame]));
-      pFrame++;
+      if (pDirection == R) attachImage(pAction[mFrame]);
+      if (pDirection == L) attachImage(reverseImage(pAction[mFrame]));
+      mFrame++;
     }
     //weapon
-    if (sFrame >= sAction.length) sFrame = 0;
+    if (sFrame >= sAttack.length) sFrame = 0;
     if (frameCount % 5 == 0) {
       if (sDirection == R) {
         attack.setRotation(radians(0));
-        attack.attachImage(sAction[sFrame]);
+        attack.attachImage(sAttack[sFrame]);
       }
       if (sDirection == L) {
         attack.setRotation(radians(0));
-        attack.attachImage(reverseImage(sAction[sFrame]));
+        attack.attachImage(reverseImage(sAttack[sFrame]));
       }
       if (sDirection == U) {
         attack.setRotation(radians(270));
-        attack.attachImage(sAction[sFrame]);
+        attack.attachImage(sAttack[sFrame]);
       }
       if (sDirection == D) {
         attack.setRotation(radians(90));
-        attack.attachImage(sAction[sFrame]);
+        attack.attachImage(sAttack[sFrame]);
       }
       sFrame++;
     }

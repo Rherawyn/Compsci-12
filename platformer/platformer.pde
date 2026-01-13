@@ -39,13 +39,15 @@ PImage[] pAction;
 
 //weapon animation
 PImage[] sAttack;
-PImage[] sAction;
+
+//terrain animation
+PImage[] spike;
 
 //controls
 boolean mouseReleased, wasPressed;
 boolean spacekey, upkey, downkey, rightkey, leftkey, wkey, akey, skey, dkey, qkey, ekey;
 
-ArrayList<FGameObject> enemies = new ArrayList<FGameObject>();
+ArrayList<FGameObject> acts = new ArrayList<FGameObject>();
 FPlayer player;
 
 FWorld world;
@@ -110,20 +112,14 @@ void loadWorld(PImage img, PImage[] imgs) {
         blocks.addBody(b);
         //world.add(b);
       } else if (c == color(255, 127, 39)) {
-        //eSpawnX.add(x*gridSize);
-        //eSpawnY.add(y*gridSize);
         FFlenemy enemy = new FFlenemy(x*gridSize, y*gridSize);
-        enemies.add(enemy);
+        acts.add(enemy);
         world.add(enemy);
         //world.add(b);
       } else if (c == red) {
-        FBox b = new FBox(gridSize, gridSize);
-        b.setPosition(x*gridSize, y*gridSize);
-        b.setName("spike");
-        b.setRestitution(0);
-        b.setFriction(4);
-        b.setStatic(true);
-        world.add(b);
+        FSpike spike = new FSpike(x*gridSize, y*gridSize);
+        acts.add(spike);
+        world.add(spike);
       }
     }
   }
@@ -137,8 +133,8 @@ void loadPlayer() {
 }
 
 void actWorld() {
-  for (int i = 0; i < enemies.size(); i++) {
-    FGameObject e = enemies.get(i);
+  for (int i = 0; i < acts.size(); i++) {
+    FGameObject e = acts.get(i);
     e.act();
   }
 }
@@ -167,32 +163,32 @@ void draw() {
 }
 
 void loadImages() {
+  //character animations
   pRun = new PImage[6];
-  pRun[0] = loadImage("pRun1.png");
-  pRun[1] = loadImage("pRun2.png");
-  pRun[2] = loadImage("pRun3.png");
-  pRun[3] = loadImage("pRun4.png");
-  pRun[4] = loadImage("pRun5.png");
-  pRun[5] = loadImage("pRun6.png");
+  for (int i = 0; i < 6; i++) {
+    pRun[i] = loadImage("pRun" + (i+1) + ".png");
+  }
 
   pJump = new PImage[1];
   pJump[0] = loadImage("pJump.png");
 
   pIdle = new PImage[4];
-  pIdle[0] = loadImage("pIdle1.png");
-  pIdle[1] = loadImage("pIdle2.png");
-  pIdle[2] = loadImage("pIdle3.png");
-  pIdle[3] = loadImage("pIdle4.png");
+  for (int i = 0; i < 4; i++) {
+    pIdle[i] = loadImage("pIdle" + (i+1) + ".png");
+  }
   
   pAction = pIdle;
-  
+
   sAttack = new PImage[6];
-  sAttack[0] = loadImage("sAttack1.png");
-  sAttack[1] = loadImage("sAttack2.png");
-  sAttack[2] = loadImage("sAttack3.png");
-  sAttack[3] = loadImage("sAttack4.png");
-  sAttack[4] = loadImage("sAttack5.png");
-  sAttack[5] = loadImage("sAttack6.png");
+  for (int i = 0; i < 6; i++) {
+    sAttack[i] = loadImage("sAttack" + (i+1) + ".png");
+  }
   
-  sAction = sAttack;
+  //terrain animations
+  spike = new PImage[4];
+  for (int i = 0; i < 4; i++) {
+    spike[i] = loadImage("spike" + (i+1) + ".png");
+  }
+  
+ 
 }

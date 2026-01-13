@@ -1,4 +1,5 @@
 class FGameObject extends FBox {
+  int mFrame;
 
   FGameObject() {
     super(gridSize, gridSize);
@@ -8,7 +9,7 @@ class FGameObject extends FBox {
     
   }
   
-  boolean collisions(String n, String g) {
+  boolean isTouching(String n, String g) {
     ArrayList<FContact> contacts = player.getContacts();
     for (int i = 0; i < contacts.size(); i++) {
       FContact c = contacts.get(i);
