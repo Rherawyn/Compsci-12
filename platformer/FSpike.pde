@@ -11,6 +11,7 @@ class FSpike extends FGameObject {
 
   void act() {
     animate();
+    knockback();
   }
   
   void animate() {

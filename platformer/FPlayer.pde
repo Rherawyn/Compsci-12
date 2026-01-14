@@ -1,7 +1,7 @@
 class FPlayer extends FGameObject {
   FBox feet;
   FCircle attack;
-  int lives = 1;
+  int lives = 3;
   int attackCooldown = 0;
   float AtPX;
   float AtPY;
@@ -12,6 +12,7 @@ class FPlayer extends FGameObject {
   final int R = 1;
   final int U = 2;
   final int D = 3;
+  boolean knockback;
 
   FPlayer() {
     super();
@@ -89,8 +90,8 @@ class FPlayer extends FGameObject {
     //player movement
     float vy = player.getVelocityY();
     float vx = 200;
-    if (akey) vx = -200;
-    if (dkey) vx = 200;
+    if (akey) vx = -250;
+    if (dkey) vx = 250;
     if (!akey && !dkey) vx = 0;
     feet();
 
@@ -117,18 +118,25 @@ class FPlayer extends FGameObject {
     }
     attack.setVelocity(this.getVelocityX(), this.getVelocityY()-18.3);
 
-    setVelocity(vx, vy);
-    ArrayList<FContact> contacts = feet.getContacts();
-    if (spacekey && contacts.size() > 1) {
+    int kcooldown = 0;
+    kcooldown++;
+    if (!knockback) {
+      setVelocity(vx, vy);
+      kcooldown = 0;
+    }
+
+    if (kcooldown > 15) {
+      knockback = false;
+    }
+
+    ArrayList<FContact> fContacts = feet.getContacts();
+    if (spacekey && fContacts.size() > 1) {
       setVelocity(getVelocityX(), -650);
     }
 
-    if (isTouching("spike", "flenemy")) {
-      player.setPosition(pSpawnX, pSpawnY);
-    }
 
     if (lives < 0) {
-      world.remove(this);  
+      this.setPosition(pSpawnX, pSpawnY);
     }
   }
 
