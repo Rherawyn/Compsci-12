@@ -1,8 +1,9 @@
 class FPlayer extends FGameObject {
   FBox feet;
   FCircle attack;
-  int lives = 3;
+  int lives = 5;
   int attackCooldown = 0;
+  int kcooldown = 0;
   float AtPX;
   float AtPY;
   int sFrame;
@@ -118,14 +119,13 @@ class FPlayer extends FGameObject {
     }
     attack.setVelocity(this.getVelocityX(), this.getVelocityY()-18.3);
 
-    int kcooldown = 0;
     kcooldown++;
     if (!knockback) {
       setVelocity(vx, vy);
       kcooldown = 0;
     }
 
-    if (kcooldown > 15) {
+    if (kcooldown > 5) {
       knockback = false;
     }
 
@@ -135,8 +135,10 @@ class FPlayer extends FGameObject {
     }
 
 
-    if (lives < 0) {
+    if (lives <= 0) {
       this.setPosition(pSpawnX, pSpawnY);
+      lives = 5;
+      this.setVelocity(0,0);
     }
   }
 

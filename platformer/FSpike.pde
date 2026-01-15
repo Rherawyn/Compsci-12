@@ -12,8 +12,18 @@ class FSpike extends FGameObject {
   void act() {
     animate();
     knockback();
+
+    if (this.isTouching("fattack")) {
+      player.setVelocity(0, player.getVelocityY());
+      if (Math.abs(player.getY() - this.getY()) > Math.abs(player.getX() - this.getX())) {
+        player.setVelocity(0, -400);
+      } else {
+        player.setVelocity((player.getX() - this.getX()) * 5, 0);
+      }
+      player.knockback=true;
+    }
   }
-  
+
   void animate() {
     if (mFrame >= spike.length) mFrame = 0;
     if (frameCount % 15 == 0) {

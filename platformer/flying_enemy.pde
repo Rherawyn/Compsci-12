@@ -2,7 +2,7 @@ class FFlenemy extends FGameObject {
 
   FFlenemy(int x, int y) {
     super();
-    lives = 100;
+    lives = 3;
     setPosition(x, y-gridSize);
     setRotatable(false);
     setFillColor(red);
@@ -22,19 +22,17 @@ class FFlenemy extends FGameObject {
       vy = -18.3;
     }
     setVelocity(vx, vy);
-    
+
     knockback();
 
-    ArrayList<FContact> contacts = this.getContacts();
-    for (int j = 0; j < contacts.size(); j++) {
-      FContact c = contacts.get(j);
-      if (c.contains("fattack")) {
-        this.setVelocity((this.getX() - player.getX())*2, (this.getY() - player.getY())*2);
+    if (this.isTouching("fattack")) {
+      this.setVelocity((this.getX() - player.getX())*2, (this.getY() - player.getY())*2);
+      if (player.attackCooldown > 14) {
         this.lives--;
       }
     }
 
-    if (lives < 0) {
+    if (lives <= 0) {
       world.remove(this);
     }
   }

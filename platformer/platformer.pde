@@ -22,6 +22,10 @@ final int GAMEOVER = 2;
 final int PAUSE = 3;
 int mode = 1;
 
+//health
+PImage mask;
+PImage emask;
+
 //world stuff
 PImage bg;
 PImage map;
@@ -67,6 +71,8 @@ void setup() {
     ground[i-1] = loadImage("ftile" + i + ".png");
   }
 
+  mask = loadImage("mask.png");
+  emask = loadImage("emask.png");
   map = loadImage("spawnroom.png");
   loadImages();
   loadWorld(map, ground);

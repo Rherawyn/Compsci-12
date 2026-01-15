@@ -11,10 +11,12 @@ class FGameObject extends FBox {
   
   void knockback() {
     if(this.isTouching("fplayer")) {
-      player.knockback=true;
       player.setVelocity(0,player.getVelocityY());
       player.setVelocity((player.getX() - this.getX())*10, (player.getY() - this.getY())*10);
-      player.lives--;
+      if(!player.knockback) {
+        player.lives--;
+      }
+      player.knockback=true;
     } 
   }
   
