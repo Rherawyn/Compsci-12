@@ -29,6 +29,7 @@ class FFlenemy extends FGameObject {
       this.setVelocity((this.getX() - player.getX())*2, (this.getY() - player.getY())*2);
       if (player.attackCooldown > 14) {
         this.lives--;
+        getSoul();
       }
     }
 

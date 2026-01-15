@@ -1,4 +1,7 @@
 int l;
+int hx = 109;
+int hy = 41;
+int soul;
 
 void game() {
   background(bg);
@@ -6,13 +9,16 @@ void game() {
   actWorld();
   player.act();
   
+  //HUD
+  image(vessel[soul], 25, 25);
+  
   l = player.lives;
   for(int i = 0; i < 5; i++) {
-   image(emask, 25+(i*gridSize), 25); 
+   image(emask, hx+(i*(gridSize*0.75)), hy); 
   }
   
   for(int i = 0; i < l; i++) {
-   image(mask, 25+(i*gridSize), 25); 
+   image(mask, hx+(i*(gridSize*0.75)), hy); 
   }
 }
 

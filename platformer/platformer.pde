@@ -25,6 +25,7 @@ int mode = 1;
 //health
 PImage mask;
 PImage emask;
+PImage[] vessel;
 
 //world stuff
 PImage bg;
@@ -196,5 +197,10 @@ void loadImages() {
     spike[i] = loadImage("spike" + (i+1) + ".png");
   }
   
+  //vessel
+  vessel = new PImage[7];
+  for (int i = 0; i < 7; i++) {
+    vessel[i] = loadImage("vessel" + (i+1) + ".png");
+  }
  
 }
