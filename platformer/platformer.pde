@@ -48,6 +48,7 @@ PImage[] sAttack;
 
 //terrain animation
 PImage[] spike;
+PImage[] bench;
 
 //controls
 boolean mouseReleased, wasPressed;
@@ -128,6 +129,10 @@ void loadWorld(PImage img, PImage[] imgs) {
         FSpike spike = new FSpike(x*gridSize, y*gridSize);
         acts.add(spike);
         world.add(spike);
+      } else if (c == color(0,255,0)) {
+        FBench bench = new FBench(x*gridSize, y*gridSize);
+        acts.add(bench);
+        world.add(bench);
       }
     }
   }
@@ -184,29 +189,34 @@ void loadImages() {
   for (int i = 0; i < 4; i++) {
     pIdle[i] = loadImage("pIdle" + (i+1) + ".png");
   }
-  
+
   pHeal = new PImage[10];
   for (int i = 0; i < 10; i++) {
     pHeal[i] = loadImage("pHeal" + (i+1) + ".png");
   }
-  
+
   pAction = pIdle;
 
   sAttack = new PImage[6];
   for (int i = 0; i < 6; i++) {
     sAttack[i] = loadImage("sAttack" + (i+1) + ".png");
   }
-  
+
   //terrain animations
   spike = new PImage[4];
   for (int i = 0; i < 4; i++) {
     spike[i] = loadImage("spike" + (i+1) + ".png");
   }
   
-  //vessel
-  vessel = new PImage[10];
+  bench = new PImage[10];
   for (int i = 0; i < 10; i++) {
-    vessel[i] = loadImage("vessel" + (i+1) + ".png");
+    bench[i] = loadImage("bench" + (i) + ".png");
   }
- 
+
+//vessel
+vessel = new PImage[10];
+for (int i = 0; i < 10; i++) {
+  vessel[i] = loadImage("vessel" + (i+1) + ".png");
+}
+
 }

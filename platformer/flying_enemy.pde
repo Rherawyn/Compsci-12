@@ -13,6 +13,17 @@ class FFlenemy extends FGameObject {
     setRestitution(0);
     float vy;
     float vx;
+    
+    if (this.isTouching("fattack")) {
+      player.setVelocity(0, player.getVelocityY());
+      if (Math.abs(player.getY() - this.getY()) > Math.abs(player.getX() - this.getX())) {
+        player.setVelocity(0, -400);
+      } else {
+        player.setVelocity((player.getX() - this.getX()) * 2, 0);
+      }
+      player.knockback=true;
+    }
+    
     if (dist(player.getX(), player.getY(), this.getX(), this.getY()) < 300) {
       //setPosition(this.getX()-(this.getX()-player.getX() / abs(this.getX()-player.getX()) * 5), this.getY()-(this.getY()-player.getY() / abs(this.getY()-player.getY()) * 5));
       vx = (player.getX() - this.getX());

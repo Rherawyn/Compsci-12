@@ -18,7 +18,7 @@ class FSpike extends FGameObject {
       if (Math.abs(player.getY() - this.getY()) > Math.abs(player.getX() - this.getX())) {
         player.setVelocity(0, -400);
       } else {
-        player.setVelocity((player.getX() - this.getX()) * 5, 0);
+        player.setVelocity((player.getX() - this.getX()) * 2, 0);
       }
       player.knockback=true;
     }
@@ -32,3 +32,7 @@ class FSpike extends FGameObject {
     }
   }
 }
+
+//9. 4,5,7,8,9
+//10. 6,7,9,11
+//11 EVERYTHING
