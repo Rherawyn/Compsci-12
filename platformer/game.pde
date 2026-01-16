@@ -1,7 +1,7 @@
 int l;
 int hx = 109;
 int hy = 41;
-int soul;
+int soul = 0;
 
 void game() {
   background(bg);

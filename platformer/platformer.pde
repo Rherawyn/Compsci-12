@@ -41,6 +41,7 @@ PImage[] pRun;
 PImage[] pIdle;
 PImage[] pJump;
 PImage[] pAction;
+PImage[] pHeal;
 
 //weapon animation
 PImage[] sAttack;
@@ -184,6 +185,11 @@ void loadImages() {
     pIdle[i] = loadImage("pIdle" + (i+1) + ".png");
   }
   
+  pHeal = new PImage[10];
+  for (int i = 0; i < 10; i++) {
+    pHeal[i] = loadImage("pHeal" + (i+1) + ".png");
+  }
+  
   pAction = pIdle;
 
   sAttack = new PImage[6];
@@ -198,8 +204,8 @@ void loadImages() {
   }
   
   //vessel
-  vessel = new PImage[7];
-  for (int i = 0; i < 7; i++) {
+  vessel = new PImage[10];
+  for (int i = 0; i < 10; i++) {
     vessel[i] = loadImage("vessel" + (i+1) + ".png");
   }
  

@@ -4,6 +4,7 @@ class FPlayer extends FGameObject {
   int lives = 5;
   int attackCooldown = 0;
   int kcooldown = 0;
+  int healing;
   float AtPX;
   float AtPY;
   int sFrame;
@@ -88,6 +89,21 @@ class FPlayer extends FGameObject {
       }
     }
 
+    //healing
+    if (soul >= 3 && lives < 5) {
+      if (ekey) {
+        healing++;
+        pAction = pHeal;
+      }
+      if (healing >= 100) {
+        healing = 0;
+        soul -= 3;
+        lives++;
+      }
+    } else {
+      healing = 0;
+    }
+
     //player movement
     float vy = player.getVelocityY();
     float vx = 200;
@@ -138,7 +154,7 @@ class FPlayer extends FGameObject {
     if (lives <= 0) {
       this.setPosition(pSpawnX, pSpawnY);
       lives = 5;
-      this.setVelocity(0,0);
+      this.setVelocity(0, 0);
     }
   }
 

@@ -21,7 +21,7 @@ class FGameObject extends FBox {
   }
 
   void getSoul() {
-    if(soul < 6) {
+    if(soul < 9) {
       soul++;
     }
   }
