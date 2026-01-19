@@ -36,6 +36,9 @@ int gridSize = 48;
 float zoom = 1;
 float pSpawnX, pSpawnY;
 
+//intro
+PImage logo;
+
 //character animations
 PImage[] pRun;
 PImage[] pIdle;
@@ -49,6 +52,7 @@ PImage[] sAttack;
 //terrain animation
 PImage[] spike;
 PImage[] bench;
+PImage[] bwall;
 
 //controls
 boolean mouseReleased, wasPressed;
@@ -97,10 +101,10 @@ void loadWorld(PImage img, PImage[] imgs) {
       } else if (c == black) {
         FBox b = new FBox(gridSize, gridSize);
         b.setPosition(x*gridSize, y*gridSize);
-        b.setName("block");
         if (img.get(x, y-1) != black && img.get(x, y-1) != color(127, 127, 127) && img.get(x, y-1) != red) {
           b.attachImage(ground[x%4]);
         }
+        b.setName("block");
         b.setFillColor(black);
         b.setRestitution(0);
         b.setFriction(4);
@@ -124,7 +128,10 @@ void loadWorld(PImage img, PImage[] imgs) {
         FFlenemy enemy = new FFlenemy(x*gridSize, y*gridSize);
         acts.add(enemy);
         world.add(enemy);
-        //world.add(b);
+      } else if (c == color(255, 255, 0)) {
+        FWenemy enemy = new FWenemy(x*gridSize, y*gridSize);
+        acts.add(enemy);
+        world.add(enemy);
       } else if (c == red) {
         FSpike spike = new FSpike(x*gridSize, y*gridSize);
         acts.add(spike);
@@ -133,6 +140,10 @@ void loadWorld(PImage img, PImage[] imgs) {
         FBench bench = new FBench(x*gridSize, y*gridSize);
         acts.add(bench);
         world.add(bench);
+      } else if (c == color(0,0,255)) {
+        FBwall bwall = new FBwall(x*gridSize, y*gridSize);
+        acts.add(bwall);
+        world.add(bwall);
       }
     }
   }
@@ -158,6 +169,7 @@ void drawWorld() {
   scale(zoom);
   for (int i = 0; i < bposx.size(); i++) {
     fill(black);
+    stroke(black);
     rect(bposx.get(i), bposy.get(i), gridSize, gridSize);
   }
   world.step();
@@ -176,6 +188,9 @@ void draw() {
 }
 
 void loadImages() {
+  //logo
+  logo = loadImage("hklogo.png");
+  
   //character animations
   pRun = new PImage[6];
   for (int i = 0; i < 6; i++) {
@@ -183,7 +198,7 @@ void loadImages() {
   }
 
   pJump = new PImage[1];
-  pJump[0] = loadImage("pJump.png");
+  pJump[0] = loadImage("pJump.png"); 
 
   pIdle = new PImage[4];
   for (int i = 0; i < 4; i++) {
@@ -211,6 +226,11 @@ void loadImages() {
   bench = new PImage[10];
   for (int i = 0; i < 10; i++) {
     bench[i] = loadImage("bench" + (i) + ".png");
+  }
+  
+  bwall = new PImage[4];
+  for (int i = 0; i < 4; i++) {
+    bwall[i] = loadImage("bwall" + (i+1) + ".png");
   }
 
   //vessel

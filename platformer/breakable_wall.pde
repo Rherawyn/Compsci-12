@@ -1,17 +1,17 @@
-class FSpike extends FGameObject {
+class FBwall extends FGameObject {
+  int durability = 0;
 
-  FSpike(float x, float y) {
+  FBwall(float x, float y) {
     super();
     setPosition(x, y);
-    setName("spike");
+    setName("bwall");
     setRestitution(0);
     setFriction(4);
     setStatic(true);
   }
 
   void act() {
-    animate();
-    knockback();
+    if (durability < 4) this.attachImage(bwall[durability]);
 
     if (this.isTouching("fattack")) {
       player.setVelocity(0, player.getVelocityY());
@@ -19,22 +19,17 @@ class FSpike extends FGameObject {
         if (this.getY() > player.getY()) {
           player.setVelocity(0, -400);
         } else  player.setVelocity(0, 100);
+        if (player.attackCooldown > 14) {
+          durability++;
+        }
       } else {
-        player.setVelocity((player.getX() - this.getX()) * 2, 0);
+        player.setVelocity((player.getX() - this.getX()) * 1.2, 0);
+        if (player.attackCooldown > 14) {
+          durability++;
+        }
       }
       player.knockback=true;
-    }
-  }
-
-  void animate() {
-    if (mFrame >= spike.length) mFrame = 0;
-    if (frameCount % 15 == 0) {
-      attachImage(spike[mFrame]);
-      mFrame++;
+      if (durability >= 4) world.remove(this);
     }
   }
 }
-
-//9. 4,5,7,8,9
-//10. 6,7,9,11
-//11 EVERYTHING

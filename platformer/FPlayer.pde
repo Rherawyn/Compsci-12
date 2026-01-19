@@ -24,9 +24,9 @@ class FPlayer extends FGameObject {
     setPosition(pSpawnX, pSpawnY);
     setRotatable(false);
     setFillColor(red);
+    setName("fplayer");
     feet = new FBox(40, 10);
     feet.setRotatable(false);
-    setName("fplayer");
     feet.setSensor(true);
     feet.setNoFill();
     feet.setNoStroke();
@@ -156,9 +156,7 @@ class FPlayer extends FGameObject {
 
 
     if (lives <= 0) {
-      this.setPosition(pSpawnX, pSpawnY);
-      lives = 5;
-      this.setVelocity(0, 0);
+      mode = GAMEOVER;
     }
   }
 

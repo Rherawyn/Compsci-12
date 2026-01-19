@@ -1,18 +1,32 @@
-class FFlenemy extends FGameObject {
+class FWenemy extends FGameObject {
+  FBox bonk;
+  float vy = 0;
+  float vx = 100;
 
-  FFlenemy(int x, int y) {
+  FWenemy(int x, int y) {
     super();
-    lives = 3;
-    setPosition(x, y-gridSize);
+    lives = 2;
+    setPosition(x, y);
     setRotatable(false);
     setFillColor(red);
-    setName("flenemy");
+    setName("wenemy");
+
+    bonk = new FBox(10, 40);
+    bonk.setRotatable(false);
+    bonk.setSensor(true);
+    bonk.setFill(255);
+    bonk.setNoStroke();
+    world.add(bonk);
+  }
+
+  void bonk() {
+    bonk.setPosition(this.getX()+(30 * (vx/Math.abs(vx))), getY());
+    bonk.setVelocity(this.getVelocityX(), this.getVelocityY());
   }
 
   void act() {
     setRestitution(0);
-    float vy;
-    float vx;
+    bonk();
 
     if (this.isTouching("fattack")) {
       player.setVelocity(0, player.getVelocityY());
@@ -25,16 +39,18 @@ class FFlenemy extends FGameObject {
       }
       player.knockback=true;
     }
-
-    if (dist(player.getX(), player.getY(), this.getX(), this.getY()) < 300) {
-      //setPosition(this.getX()-(this.getX()-player.getX() / abs(this.getX()-player.getX()) * 5), this.getY()-(this.getY()-player.getY() / abs(this.getY()-player.getY()) * 5));
-      vx = (player.getX() - this.getX());
-      vy = (player.getY() - this.getY());
-    } else {
-      vx = 0;
-      vy = -18.3;
-    }
+    
     setVelocity(vx, vy);
+
+    ArrayList<FContact> contacts = bonk.getContacts();
+      for (int i = 0; i < contacts.size(); i++) {
+        FContact c = contacts.get(i);
+        if (c.contains("block")) {
+          vx = vx * -1;
+        }
+      }
+      
+    println(contacts.size());
 
     knockback();
 
@@ -48,6 +64,7 @@ class FFlenemy extends FGameObject {
 
     if (lives <= 0) {
       world.remove(this);
+      world.remove(bonk);
     }
   }
 }
