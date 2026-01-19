@@ -92,8 +92,12 @@ class FPlayer extends FGameObject {
     //healing
     if (soul >= 3 && lives < 5) {
       if (ekey) {
+        akey = false;
+        dkey = false;
         healing++;
         pAction = pHeal;
+      } else {
+       healing = 0; 
       }
       if (healing >= 100) {
         healing = 0;

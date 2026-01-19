@@ -20,7 +20,7 @@ final int INTRO = 0;
 final int GAME = 1;
 final int GAMEOVER = 2;
 final int PAUSE = 3;
-int mode = 1;
+int mode = 0;
 
 //health
 PImage mask;
@@ -129,7 +129,7 @@ void loadWorld(PImage img, PImage[] imgs) {
         FSpike spike = new FSpike(x*gridSize, y*gridSize);
         acts.add(spike);
         world.add(spike);
-      } else if (c == color(0,255,0)) {
+      } else if (c == color(0, 255, 0)) {
         FBench bench = new FBench(x*gridSize, y*gridSize);
         acts.add(bench);
         world.add(bench);
@@ -207,16 +207,15 @@ void loadImages() {
   for (int i = 0; i < 4; i++) {
     spike[i] = loadImage("spike" + (i+1) + ".png");
   }
-  
+
   bench = new PImage[10];
   for (int i = 0; i < 10; i++) {
     bench[i] = loadImage("bench" + (i) + ".png");
   }
 
-//vessel
-vessel = new PImage[10];
-for (int i = 0; i < 10; i++) {
-  vessel[i] = loadImage("vessel" + (i+1) + ".png");
-}
-
+  //vessel
+  vessel = new PImage[10];
+  for (int i = 0; i < 10; i++) {
+    vessel[i] = loadImage("vessel" + (i+1) + ".png");
+  }
 }
