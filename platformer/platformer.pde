@@ -46,6 +46,9 @@ PImage[] pJump;
 PImage[] pAction;
 PImage[] pHeal;
 
+//NPC animations
+PImage[] wenemy;
+
 //weapon animation
 PImage[] sAttack;
 
@@ -82,11 +85,11 @@ void setup() {
   emask = loadImage("emask.png");
   map = loadImage("spawnroom.png");
   loadImages();
-  loadWorld(map, ground);
+  loadWorld(map);
   loadPlayer();
 }
 
-void loadWorld(PImage img, PImage[] imgs) {
+void loadWorld(PImage img) {
   world = new FWorld(-10000, -10000, 10000, 10000);
   world.setGravity(0, 1100);
 
@@ -110,7 +113,7 @@ void loadWorld(PImage img, PImage[] imgs) {
         b.setFriction(4);
         b.setStatic(true);
         blocks.addBody(b);
-        //world.add(b);
+        world.add(b);
       } else if (c == color(181, 230, 29)) {
         FBox b = new FBox(gridSize, gridSize);
         b.setPosition(x*gridSize, y*gridSize);
@@ -123,7 +126,7 @@ void loadWorld(PImage img, PImage[] imgs) {
         b.setFriction(4);
         b.setStatic(true);
         blocks.addBody(b);
-        //world.add(b);
+        world.add(b);
       } else if (c == color(255, 127, 39)) {
         FFlenemy enemy = new FFlenemy(x*gridSize, y*gridSize);
         acts.add(enemy);
@@ -148,7 +151,7 @@ void loadWorld(PImage img, PImage[] imgs) {
     }
   }
   blocks.setStatic(true);
-  world.add(blocks);
+  //world.add(blocks);
 }
 
 void loadPlayer() {
@@ -215,6 +218,12 @@ void loadImages() {
   sAttack = new PImage[6];
   for (int i = 0; i < 6; i++) {
     sAttack[i] = loadImage("sAttack" + (i+1) + ".png");
+  }
+  
+  //NPC animations 
+  wenemy = new PImage[6];
+  for (int i = 0; i < 6; i++) {
+    wenemy[i] = loadImage("wenemy" + (i+1) + ".png");
   }
 
   //terrain animations

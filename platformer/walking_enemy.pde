@@ -12,9 +12,10 @@ class FWenemy extends FGameObject {
     setName("wenemy");
 
     bonk = new FBox(10, 40);
+    bonk.setName("bonk");
     bonk.setRotatable(false);
     bonk.setSensor(true);
-    bonk.setFill(255);
+    bonk.setNoFill();
     bonk.setNoStroke();
     world.add(bonk);
   }
@@ -25,6 +26,7 @@ class FWenemy extends FGameObject {
   }
 
   void act() {
+    animate();
     setRestitution(0);
     bonk();
 
@@ -39,18 +41,21 @@ class FWenemy extends FGameObject {
       }
       player.knockback=true;
     }
-    
+
     setVelocity(vx, vy);
 
     ArrayList<FContact> contacts = bonk.getContacts();
-      for (int i = 0; i < contacts.size(); i++) {
-        FContact c = contacts.get(i);
-        if (c.contains("block")) {
-          vx = vx * -1;
-        }
+    for (int i = 0; i < contacts.size(); i++) {
+      FContact c = contacts.get(i);
+
+      if (c.contains("block") || c.contains("wenemy")) {
+        vx = vx * -1;
+        break;
       }
-      
-    println(contacts.size());
+    }
+
+    
+
 
     knockback();
 
@@ -65,6 +70,15 @@ class FWenemy extends FGameObject {
     if (lives <= 0) {
       world.remove(this);
       world.remove(bonk);
+    }
+  }
+  
+  void animate() {
+    if (mFrame >= wenemy.length) mFrame = 0;
+    if (frameCount % 7 == 0) {
+      if (vx > 0) attachImage(wenemy[mFrame]);
+      if (vx < 0) attachImage(reverseImage(wenemy[mFrame]));
+      mFrame++;
     }
   }
 }
