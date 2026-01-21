@@ -84,7 +84,16 @@ class FPlayer extends FGameObject {
       if (wkey) {
         sDirection = U;
       }
-      if (skey) {
+      
+      if (sDirection == D && Pcontacts.size() != 0) {
+        if (pDirection == R) {
+          sDirection = R;
+        }
+        if (pDirection == L) {
+          sDirection = L;
+        }
+      }
+      if (skey && Pcontacts.size() == 0) {
         sDirection = D;
       }
     }
@@ -97,7 +106,7 @@ class FPlayer extends FGameObject {
         healing++;
         pAction = pHeal;
       } else {
-       healing = 0; 
+        healing = 0;
       }
       if (healing >= 100) {
         healing = 0;
@@ -127,9 +136,17 @@ class FPlayer extends FGameObject {
     if (wkey) {
       AtPY = -70;
       AtPX = 0;
-    } else if (skey) {
+    } else if (skey && Pcontacts.size() == 0) {
       AtPY = 70;
       AtPX = 0;
+    } else if (Pcontacts.size() != 0) {
+      if (pDirection == R) {
+        AtPX = 70;
+        AtPY = 0;
+      } else if (pDirection == L) {
+        AtPX = -70;
+        AtPY = 0;
+      }
     }
 
     //combat

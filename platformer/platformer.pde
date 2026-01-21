@@ -56,6 +56,8 @@ PImage[] sAttack;
 PImage[] spike;
 PImage[] bench;
 PImage[] bwall;
+boolean gflipped = false;
+PImage gate;
 
 //controls
 boolean mouseReleased, wasPressed;
@@ -104,7 +106,7 @@ void loadWorld(PImage img) {
       } else if (c == black) {
         FBox b = new FBox(gridSize, gridSize);
         b.setPosition(x*gridSize, y*gridSize);
-        if (img.get(x, y-1) != black && img.get(x, y-1) != color(127, 127, 127) && img.get(x, y-1) != red) {
+        if (img.get(x, y-1) != black && img.get(x, y-1) != color(127, 127, 127) && img.get(x, y-1) != red && img.get(x, y-1) != color(0,0,255)) {
           b.attachImage(ground[x%4]);
         }
         b.setName("block");
@@ -147,6 +149,11 @@ void loadWorld(PImage img) {
         FBwall bwall = new FBwall(x*gridSize, y*gridSize);
         acts.add(bwall);
         world.add(bwall);
+      } else if (c == color(0,170,255)) {
+        FGate gate = new FGate(x*gridSize, y*gridSize, gflipped);
+        if(gflipped == false) gflipped = true; 
+        acts.add(gate);
+        world.add(gate);
       }
     }
   }
@@ -241,6 +248,8 @@ void loadImages() {
   for (int i = 0; i < 4; i++) {
     bwall[i] = loadImage("bwall" + (i+1) + ".png");
   }
+  
+  gate = loadImage("gate.png");
 
   //vessel
   vessel = new PImage[10];
