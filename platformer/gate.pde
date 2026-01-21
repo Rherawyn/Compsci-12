@@ -1,5 +1,4 @@
 class FGate extends FGameObject {
-  boolean activated = false;
   boolean flipped;
 
   FGate(float x, float y, boolean f) {
@@ -19,5 +18,9 @@ class FGate extends FGameObject {
     if (activated) {
       world.remove(this);
     }
+  }
+
+  void setActivated() {
+    activated = true;
   }
 }

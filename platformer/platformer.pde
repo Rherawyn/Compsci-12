@@ -56,6 +56,8 @@ PImage[] sAttack;
 PImage[] spike;
 PImage[] bench;
 PImage[] bwall;
+PImage[] lever;
+PImage[] indicator;
 boolean gflipped = false;
 PImage gate;
 
@@ -154,6 +156,10 @@ void loadWorld(PImage img) {
         if(gflipped == false) gflipped = true; 
         acts.add(gate);
         world.add(gate);
+      } else if (c == color(0,255,255)) {
+        FLever lever = new FLever(x*gridSize, y*gridSize, acts);
+        acts.add(lever);
+        world.add(lever);
       }
     }
   }
@@ -247,6 +253,16 @@ void loadImages() {
   bwall = new PImage[4];
   for (int i = 0; i < 4; i++) {
     bwall[i] = loadImage("bwall" + (i+1) + ".png");
+  }
+  
+  lever = new PImage[2];
+  for (int i = 0; i < 2; i++) {
+    lever[i] = loadImage("lever" + (i+1) + ".png");
+  }
+  
+  indicator = new PImage[2];
+  for (int i = 0; i < 2; i++) {
+    indicator[i] = loadImage("switch" + (i+1) + ".png");
   }
   
   gate = loadImage("gate.png");
