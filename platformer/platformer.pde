@@ -19,7 +19,7 @@ color red = color(255, 0, 0);
 final int INTRO = 0;
 final int GAME = 1;
 final int GAMEOVER = 2;
-final int PAUSE = 3;
+final int FINISH = 3;
 int mode = 0;
 
 //health
@@ -52,7 +52,7 @@ PImage[] wenemy;
 //weapon animation
 PImage[] sAttack;
 
-//terrain animation
+//terrain animation 
 PImage[] spike;
 PImage[] bench;
 PImage[] bwall;
@@ -60,6 +60,10 @@ PImage[] lever;
 PImage[] indicator;
 boolean gflipped = false;
 PImage gate;
+PImage exit;
+
+//gate logic
+boolean gateActivate = false;
 
 //controls
 boolean mouseReleased, wasPressed;
@@ -108,7 +112,7 @@ void loadWorld(PImage img) {
       } else if (c == black) {
         FBox b = new FBox(gridSize, gridSize);
         b.setPosition(x*gridSize, y*gridSize);
-        if (img.get(x, y-1) != black && img.get(x, y-1) != color(127, 127, 127) && img.get(x, y-1) != red && img.get(x, y-1) != color(0,0,255)) {
+        if (img.get(x, y-1) != black && img.get(x, y-1) != color(127, 127, 127) && img.get(x, y-1) != red && img.get(x, y-1) != color(0,0,255) && img.get(x, y-1) != color(255,91,173)) {
           b.attachImage(ground[x%4]);
         }
         b.setName("block");
@@ -153,13 +157,21 @@ void loadWorld(PImage img) {
         world.add(bwall);
       } else if (c == color(0,170,255)) {
         FGate gate = new FGate(x*gridSize, y*gridSize, gflipped);
-        if(gflipped == false) gflipped = true; 
+        gflipped = !gflipped; 
         acts.add(gate);
         world.add(gate);
       } else if (c == color(0,255,255)) {
-        FLever lever = new FLever(x*gridSize, y*gridSize, acts);
+        FLever lever = new FLever(x*gridSize, y*gridSize);
         acts.add(lever);
         world.add(lever);
+      } else if (c == color(255,0,255)) {
+        FIndicator indicator = new FIndicator(x*gridSize, y*gridSize);
+        acts.add(indicator);
+        world.add(indicator);
+      } else if (c == color(255,91,173)) {
+        FExit exit = new FExit(x*gridSize, y*gridSize);
+        acts.add(exit);
+        world.add(exit);
       }
     }
   }
@@ -199,7 +211,7 @@ void draw() {
 
   if (mode == INTRO) intro();
   else if (mode == GAME) game();
-  else if (mode == PAUSE) pause();
+  else if (mode == FINISH) finish();
   else if (mode == GAMEOVER) gameOver();
 }
 
@@ -266,6 +278,8 @@ void loadImages() {
   }
   
   gate = loadImage("gate.png");
+  
+  exit = loadImage("exit.png");
 
   //vessel
   vessel = new PImage[10];

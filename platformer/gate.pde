@@ -15,12 +15,8 @@ class FGate extends FGameObject {
     if (flipped) attachImage(reverseImage(gate));
     else attachImage(gate);
 
-    if (activated) {
+    if (gateActivate) {
       world.remove(this);
     }
-  }
-
-  void setActivated() {
-    activated = true;
   }
 }

@@ -38,7 +38,7 @@ void click() {
 void mouseReleased() {
  if (mode == INTRO) introMousePresed();
  else if (mode == GAME) gameMousePresed();
- else if (mode == PAUSE) pauseMousePresed();
+ else if (mode == FINISH) finishMousePresed();
  else if (mode == GAMEOVER) gameOverMousePresed();
 }
 

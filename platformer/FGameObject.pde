@@ -1,7 +1,6 @@
 class FGameObject extends FBox {
   int mFrame;
   int lives;
-  boolean activated = false;
 
   FGameObject() {
     super(gridSize, gridSize);
@@ -47,9 +46,5 @@ class FGameObject extends FBox {
       }
     }
     return false;
-  }
-  
-  void setActivated() {
-    activated = true;
   }
 }

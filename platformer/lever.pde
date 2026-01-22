@@ -1,9 +1,8 @@
 class FLever extends FGameObject {
-  ArrayList gates;
+  boolean activated = false;
 
-  FLever(float x, float y, ArrayList a) {
+  FLever(float x, float y) {
     super();
-    gates = a;
     setPosition(x, y);
     setName("lever");
     setSensor(true);
@@ -13,18 +12,15 @@ class FLever extends FGameObject {
 
   void act() {
     if (activated) {
-      attachImage(lever[0]);
-    } else {
       attachImage(lever[1]);
+    } else {
+      attachImage(lever[0]);
     }
 
-    if (this.isTouching("fattack") && !activated) {
-      setActivated();
-      for (int i = 0; i < gates.size(); i++) {
-        if (gates.get(i).contains("gate")) {
-          gates.get(i).setActivated();
-        }
-      }
+    if (this.isTouching("fattack")) {
+      activated = true;
+      gateActivate = true;
+      
     }
   }
 }
